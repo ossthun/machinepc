@@ -1,74 +1,25 @@
-import Link from "next/link";
+import SiteLayout from "../components/SiteLayout";
 
 export default function Terms() {
   return (
-    <Page title="Terms of Use">
+    <SiteLayout title="Conditions d’utilisation">
       <p>
-        This website is provided as a free educational resource.
+        Ce site est fourni comme ressource éducative gratuite. Il sert à
+        apprendre et à pratiquer la formation du passé composé en français.
       </p>
-
       <p>
-        The materials are intended to support learning French grammar, especially
-        the passé composé.
+        Les utilisateurs peuvent utiliser le site pour l’apprentissage personnel,
+        les devoirs, la révision ou la pratique en classe.
       </p>
-
       <p>
-        No guarantee is made that every answer, explanation, or generated form is
-        perfect. Teachers and learners should check important content before
-        using it in formal assessments.
+        Aucun résultat n’est garanti comme parfait dans tous les cas. Les
+        enseignants doivent vérifier les contenus avant de les utiliser dans une
+        évaluation officielle.
       </p>
-
       <p>
-        Users may use the website for personal learning and classroom practice.
+        Il est interdit d’utiliser le site pour perturber son fonctionnement, le
+        copier automatiquement ou tenter d’accéder à des zones non publiques.
       </p>
-
-      <p>
-        Misuse of the website, automated scraping, or attempts to disrupt the
-        service are not permitted.
-      </p>
-    </Page>
+    </SiteLayout>
   );
 }
-
-function Page({ title, children }) {
-  return (
-    <main style={styles.page}>
-      <section style={styles.card}>
-        <Link href="/" style={styles.back}>← Home</Link>
-        <h1 style={styles.title}>{title}</h1>
-        <div style={styles.text}>{children}</div>
-      </section>
-    </main>
-  );
-}
-
-const styles = {
-  page: {
-    minHeight: "100vh",
-    padding: "32px",
-    fontFamily: "system-ui, sans-serif",
-    background: "linear-gradient(135deg, #e0f2fe, #fef9c3)",
-  },
-  card: {
-    maxWidth: "850px",
-    margin: "0 auto",
-    background: "white",
-    borderRadius: "28px",
-    padding: "36px",
-    boxShadow: "0 22px 50px rgba(15,23,42,.16)",
-  },
-  back: {
-    color: "#2563eb",
-    fontWeight: 900,
-    textDecoration: "none",
-  },
-  title: {
-    fontSize: "2.5rem",
-    color: "#172033",
-  },
-  text: {
-    fontSize: "1.1rem",
-    lineHeight: 1.7,
-    color: "#475569",
-  },
-};
