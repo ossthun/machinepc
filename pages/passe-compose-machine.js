@@ -228,6 +228,14 @@ export default function PasseComposeMachine() {
         )}
       </section>
 
+      <footer className="footer">
+        <Link href="/about" className="footerLink">À propos</Link>
+        <Link href="/contact" className="footerLink">Contact</Link>
+        <Link href="/privacy" className="footerLink">Confidentialité</Link>
+        <Link href="/terms" className="footerLink">Conditions</Link>
+        <Link href="/disclaimer" className="footerLink">Avertissement</Link>
+      </footer>
+
       <style jsx>{`
         .page {
           min-height: 100vh;
@@ -563,6 +571,28 @@ export default function PasseComposeMachine() {
           border-radius: 20px;
           padding: 16px 22px;
           line-height: 1.6;
+        }
+
+        .footer {
+          max-width: 900px;
+          margin: 34px auto 0;
+          padding-top: 22px;
+          border-top: 1px solid rgba(100, 116, 139, 0.3);
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 14px;
+          font-size: 0.95rem;
+        }
+
+        .footerLink {
+          color: #64748b;
+          font-weight: 800;
+          text-decoration: none;
+        }
+
+        .footerLink:hover {
+          text-decoration: underline;
         }
 
         @keyframes travel {
