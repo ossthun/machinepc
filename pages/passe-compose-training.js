@@ -163,8 +163,8 @@ export default function PasseComposeTraining() {
           <strong>Entrée</strong> dans le deuxième champ pour vérifier.
         </p>
 
-        <Link href="/passe-compose-machine" className="backLink">
-          ← Retour à la machine automatique
+        <Link href="/" className="backLink">
+          ← Retour à l’accueil
         </Link>
       </section>
 
