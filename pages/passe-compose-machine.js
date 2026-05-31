@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
 const pronouns = [
   { key: "je", label: "je", avoir: "ai", etre: "suis", gender: "m", plural: false },
@@ -125,11 +126,17 @@ export default function PasseComposeMachine() {
     <main className="page">
       <section className="hero">
         <div className="badge">Français · Passé composé</div>
+
         <h1>La machine à fabriquer le passé composé</h1>
+
         <p>
-          Le verbe avance sur le tapis roulant. Les machines ajoutent l’auxiliaire
-          et le participe passé.
+          Le verbe avance sur le tapis roulant. Les machines ajoutent
+          l’auxiliaire et le participe passé.
         </p>
+
+        <Link href="/" className="backLink">
+          ← Retour à l’accueil
+        </Link>
       </section>
 
       <section className="panel">
@@ -157,7 +164,7 @@ export default function PasseComposeMachine() {
           <div className="light" />
           <div className="emoji">🤖</div>
           <h3>Machine 1</h3>
-          <p>Choisis l’auxiliaire</p>
+          <p>Choisit l’auxiliaire</p>
           <div className={`slot ${showAux ? "reveal" : ""}`}>
             {showAux ? result.auxiliary : "???"}
           </div>
@@ -258,6 +265,18 @@ export default function PasseComposeMachine() {
         .hero p {
           font-size: 1.15rem;
           margin-top: 14px;
+        }
+
+        .backLink {
+          display: inline-block;
+          margin-top: 12px;
+          color: #2563eb;
+          font-weight: 900;
+          text-decoration: none;
+        }
+
+        .backLink:hover {
+          text-decoration: underline;
         }
 
         .panel {
