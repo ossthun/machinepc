@@ -538,6 +538,8 @@ export default function PasseComposeTraining() {
 
         .station p {
           line-height: 1.45;
+          min-height: 84px;
+          margin-bottom: 18px;
         }
 
         .feedback {
