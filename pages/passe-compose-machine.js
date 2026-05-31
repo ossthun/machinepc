@@ -157,7 +157,7 @@ export default function PasseComposeMachine() {
           <div className="light" />
           <div className="emoji">🤖</div>
           <h3>Machine 1</h3>
-          <p>Choisit l’auxiliaire</p>
+          <p>Choisis l’auxiliaire</p>
           <div className={`slot ${showAux ? "reveal" : ""}`}>
             {showAux ? result.auxiliary : "???"}
           </div>
