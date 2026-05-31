@@ -16,6 +16,9 @@ export default function Home() {
         <Link href="/passe-compose-machine" style={styles.button}>
           Démarrer la machine ⚙️
         </Link>
+        <Link href="/passe-compose-training" style={styles.button}>
+          Mode entraînement ✍️
+        </Link>
       </section>
     </main>
   );
