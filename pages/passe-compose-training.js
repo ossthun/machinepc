@@ -14,24 +14,6 @@ const pronouns = [
   { key: "elles", label: "elles", avoir: "ont", etre: "sont", gender: "f", plural: true },
 ];
 
-const verbs = [
-  "manger",
-  "finir",
-  "vendre",
-  "aller",
-  "venir",
-  "arriver",
-  "partir",
-  "tomber",
-  "faire",
-  "prendre",
-  "voir",
-  "écrire",
-  "lire",
-  "ouvrir",
-  "boire",
-];
-
 const etreVerbs = new Set([
   "aller",
   "venir",
@@ -123,8 +105,7 @@ export default function PasseComposeTraining() {
   const [pronounKey, setPronounKey] = useState("je");
   const [auxInput, setAuxInput] = useState("");
   const [participleInput, setParticipleInput] = useState("");
-  const [auxChecked, setAuxChecked] = useState(false);
-  const [participleChecked, setParticipleChecked] = useState(false);
+  const [checked, setChecked] = useState(false);
   const [showHint, setShowHint] = useState(false);
 
   const result = useMemo(() => {
@@ -157,32 +138,20 @@ export default function PasseComposeTraining() {
   const participleCorrect =
     normalize(participleInput) === normalize(result.finalParticiple);
 
+  const finished = checked && auxCorrect && participleCorrect;
+
   function resetExercise(newVerb = verbInput) {
     setVerbInput(newVerb);
     setAuxInput("");
     setParticipleInput("");
-    setAuxChecked(false);
-    setParticipleChecked(false);
+    setChecked(false);
     setShowHint(false);
   }
 
-  function randomExercise() {
-    const randomVerb = verbs[Math.floor(Math.random() * verbs.length)];
-    const randomPronoun = pronouns[Math.floor(Math.random() * pronouns.length)];
-    setPronounKey(randomPronoun.key);
-    resetExercise(randomVerb);
+  function verifyAll() {
+    if (!auxInput.trim() || !participleInput.trim()) return;
+    setChecked(true);
   }
-
-  function checkAux() {
-    setAuxChecked(true);
-  }
-
-  function checkParticiple() {
-    setParticipleChecked(true);
-  }
-
-  const canDoParticiple = auxChecked && auxCorrect;
-  const finished = auxCorrect && participleCorrect && participleChecked;
 
   return (
     <main className="page">
@@ -190,8 +159,8 @@ export default function PasseComposeTraining() {
         <div className="badge">Mode entraînement</div>
         <h1>Construis le passé composé toi-même</h1>
         <p>
-          Choisis le bon auxiliaire, puis écris le participe passé. La machine te
-          corrige étape par étape.
+          Écris l’auxiliaire, puis le participe passé. Appuie sur{" "}
+          <strong>Entrée</strong> dans le deuxième champ pour vérifier.
         </p>
 
         <Link href="/passe-compose-machine" className="backLink">
@@ -225,51 +194,54 @@ export default function PasseComposeTraining() {
             placeholder="manger, aller, prendre..."
           />
         </label>
-
-        <button onClick={randomExercise}>🎲 Exercice au hasard</button>
       </section>
 
       <section className="taskCard">
         <div className="sentenceBuild">
           <span className="subject">{result.subject}</span>
-          <span className="blank">{auxChecked && auxCorrect ? result.auxiliaryForm : "auxiliaire ?"}</span>
-          <span className="blank">
-            {participleChecked && participleCorrect
+          <span className={`blank ${checked && auxCorrect ? "filled" : ""}`}>
+            {checked && auxCorrect ? result.auxiliaryForm : "auxiliaire ?"}
+          </span>
+          <span className={`blank ${checked && participleCorrect ? "filled" : ""}`}>
+            {checked && participleCorrect
               ? result.finalParticiple
               : "participe passé ?"}
           </span>
         </div>
 
         <div className="factoryLine">
-          <div className={`station ${auxChecked ? (auxCorrect ? "good" : "bad") : ""}`}>
+          <div className={`station ${checked ? (auxCorrect ? "good" : "bad") : ""}`}>
             <div className="stationNumber">1</div>
             <h2>Machine auxiliaire</h2>
             <p>
-              Écris seulement la forme conjuguée de l’auxiliaire:
+              Écris la forme conjuguée de l’auxiliaire:
               <br />
               <strong>ai, as, a, avons, êtes, sont...</strong>
             </p>
 
-            <div className="inputRow">
-              <input
-                value={auxInput}
-                onChange={(e) => {
-                  setAuxInput(e.target.value);
-                  setAuxChecked(false);
-                }}
-                placeholder="auxiliaire"
-              />
-              <button onClick={checkAux}>Vérifier</button>
-            </div>
+            <input
+              value={auxInput}
+              onChange={(e) => {
+                setAuxInput(e.target.value);
+                setChecked(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  document.getElementById("participleInput")?.focus();
+                }
+              }}
+              placeholder="auxiliaire"
+            />
 
-            {auxChecked && auxCorrect && (
+            {checked && auxCorrect && (
               <div className="feedback goodText">
                 Correct! Le verbe <strong>{result.verb}</strong> utilise{" "}
                 <strong>{result.auxiliary}</strong>.
               </div>
             )}
 
-            {auxChecked && !auxCorrect && (
+            {checked && !auxCorrect && (
               <div className="feedback badText">
                 Pas encore. Avec <strong>{result.subject}</strong>, il faut écrire{" "}
                 <strong>{result.auxiliaryForm}</strong>.
@@ -279,13 +251,14 @@ export default function PasseComposeTraining() {
 
           <div
             className={`station ${
-              !canDoParticiple ? "locked" : participleChecked ? (participleCorrect ? "good" : "bad") : ""
+              checked ? (participleCorrect ? "good" : "bad") : ""
             }`}
           >
             <div className="stationNumber">2</div>
             <h2>Machine participe passé</h2>
             <p>
-              Maintenant écris le participe passé complet.
+              Écris le participe passé complet, puis appuie sur{" "}
+              <strong>Entrée</strong>.
               {result.auxiliary === "être" && (
                 <>
                   <br />
@@ -294,35 +267,30 @@ export default function PasseComposeTraining() {
               )}
             </p>
 
-            <div className="inputRow">
-              <input
-                value={participleInput}
-                onChange={(e) => {
-                  setParticipleInput(e.target.value);
-                  setParticipleChecked(false);
-                }}
-                placeholder="participe passé"
-                disabled={!canDoParticiple}
-              />
-              <button onClick={checkParticiple} disabled={!canDoParticiple}>
-                Vérifier
-              </button>
-            </div>
+            <input
+              id="participleInput"
+              value={participleInput}
+              onChange={(e) => {
+                setParticipleInput(e.target.value);
+                setChecked(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  verifyAll();
+                }
+              }}
+              placeholder="participe passé"
+            />
 
-            {!canDoParticiple && (
-              <div className="feedback neutralText">
-                Termine d’abord la machine auxiliaire.
-              </div>
-            )}
-
-            {participleChecked && participleCorrect && (
+            {checked && participleCorrect && (
               <div className="feedback goodText">
                 Correct! Le participe passé final est{" "}
                 <strong>{result.finalParticiple}</strong>.
               </div>
             )}
 
-            {participleChecked && !participleCorrect && (
+            {checked && !participleCorrect && (
               <div className="feedback badText">
                 Pas encore. Le participe passé attendu est{" "}
                 <strong>{result.finalParticiple}</strong>.
@@ -366,10 +334,11 @@ export default function PasseComposeTraining() {
             <>
               <div className="stamp">Bravo!</div>
               <h2>{result.sentence}</h2>
-              <button onClick={randomExercise}>Nouvel exercice</button>
             </>
+          ) : checked ? (
+            <h2>Corrige les champs rouges, puis appuie de nouveau sur Entrée.</h2>
           ) : (
-            <h2>Complète les deux machines pour voir la solution finale.</h2>
+            <h2>Complète les deux champs. La correction se fait avec Entrée.</h2>
           )}
         </section>
       </section>
@@ -422,7 +391,7 @@ export default function PasseComposeTraining() {
         }
 
         .setup {
-          max-width: 900px;
+          max-width: 720px;
           margin: 0 auto 28px;
           background: rgba(255, 255, 255, 0.82);
           border: 2px solid white;
@@ -478,12 +447,6 @@ export default function PasseComposeTraining() {
           box-shadow: 0 10px 22px rgba(37, 99, 235, 0.25);
         }
 
-        button:disabled,
-        input:disabled {
-          opacity: 0.45;
-          cursor: not-allowed;
-        }
-
         .taskCard {
           max-width: 1050px;
           margin: 0 auto;
@@ -521,6 +484,12 @@ export default function PasseComposeTraining() {
           color: #92400e;
         }
 
+        .blank.filled {
+          background: #dcfce7;
+          border-color: #22c55e;
+          color: #166534;
+        }
+
         .factoryLine {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -544,10 +513,6 @@ export default function PasseComposeTraining() {
         .station.bad {
           border-color: #ef4444;
           background: #fef2f2;
-        }
-
-        .station.locked {
-          opacity: 0.7;
         }
 
         .stationNumber {
@@ -575,20 +540,6 @@ export default function PasseComposeTraining() {
           line-height: 1.45;
         }
 
-        .inputRow {
-          display: flex;
-          gap: 10px;
-          margin-top: 16px;
-        }
-
-        .inputRow input {
-          flex: 1;
-        }
-
-        .inputRow button {
-          min-width: 130px;
-        }
-
         .feedback {
           margin-top: 14px;
           padding: 12px 14px;
@@ -604,11 +555,6 @@ export default function PasseComposeTraining() {
         .badText {
           background: #fee2e2;
           color: #991b1b;
-        }
-
-        .neutralText {
-          background: #e0f2fe;
-          color: #075985;
         }
 
         .hintBox {
@@ -658,7 +604,7 @@ export default function PasseComposeTraining() {
         }
 
         .final h2 {
-          margin: 0 0 18px;
+          margin: 0;
           font-size: clamp(1.5rem, 5vw, 3rem);
           color: #1d4ed8;
         }
@@ -677,15 +623,6 @@ export default function PasseComposeTraining() {
         @media (max-width: 850px) {
           .factoryLine {
             grid-template-columns: 1fr;
-          }
-
-          .inputRow {
-            flex-direction: column;
-          }
-
-          .inputRow button,
-          .setup button {
-            width: 100%;
           }
         }
       `}</style>
