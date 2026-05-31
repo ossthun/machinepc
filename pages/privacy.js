@@ -19,11 +19,6 @@ export default function Privacy() {
       </p>
 
       <p>
-        If analytics, advertising, or payment tools are added later, this privacy
-        policy should be updated accordingly.
-      </p>
-
-      <p>
         Contact information provided on the contact page is used only to answer
         messages.
       </p>
