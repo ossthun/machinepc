@@ -343,6 +343,14 @@ export default function PasseComposeTraining() {
         </section>
       </section>
 
+      <footer className="footer">
+        <Link href="/about" className="footerLink">À propos</Link>
+        <Link href="/contact" className="footerLink">Contact</Link>
+        <Link href="/privacy" className="footerLink">Confidentialité</Link>
+        <Link href="/terms" className="footerLink">Conditions</Link>
+        <Link href="/disclaimer" className="footerLink">Avertissement</Link>
+      </footer>
+
       <style jsx>{`
         .page {
           min-height: 100vh;
@@ -609,6 +617,28 @@ export default function PasseComposeTraining() {
           margin: 0;
           font-size: clamp(1.5rem, 5vw, 3rem);
           color: #1d4ed8;
+        }
+
+        .footer {
+          max-width: 900px;
+          margin: 34px auto 0;
+          padding-top: 22px;
+          border-top: 1px solid rgba(100, 116, 139, 0.3);
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 14px;
+          font-size: 0.95rem;
+        }
+
+        .footerLink {
+          color: #64748b;
+          font-weight: 800;
+          text-decoration: none;
+        }
+
+        .footerLink:hover {
+          text-decoration: underline;
         }
 
         @keyframes pop {
