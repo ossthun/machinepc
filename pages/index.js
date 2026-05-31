@@ -24,6 +24,28 @@ export default function Home() {
             Mode entraînement ✍️
           </Link>
         </div>
+
+        <footer style={styles.footer}>
+          <Link href="/about" style={styles.footerLink}>
+            About
+          </Link>
+
+          <Link href="/contact" style={styles.footerLink}>
+            Contact
+          </Link>
+
+          <Link href="/privacy" style={styles.footerLink}>
+            Privacy
+          </Link>
+
+          <Link href="/terms" style={styles.footerLink}>
+            Terms
+          </Link>
+
+          <Link href="/disclaimer" style={styles.footerLink}>
+            Disclaimer
+          </Link>
+        </footer>
       </section>
     </main>
   );
@@ -41,7 +63,7 @@ const styles = {
   },
 
   card: {
-    maxWidth: "720px",
+    maxWidth: "760px",
     width: "100%",
     padding: "42px",
     borderRadius: "32px",
@@ -78,7 +100,7 @@ const styles = {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
-    gap: "16px", // ← fixes touching buttons
+    gap: "16px",
   },
 
   button: {
@@ -93,6 +115,22 @@ const styles = {
     fontWeight: 900,
     textDecoration: "none",
     boxShadow: "0 12px 24px rgba(37,99,235,.3)",
-    transition: "transform .15s ease",
+  },
+
+  footer: {
+    marginTop: "34px",
+    paddingTop: "22px",
+    borderTop: "1px solid #e2e8f0",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "14px",
+    fontSize: "0.95rem",
+  },
+
+  footerLink: {
+    color: "#64748b",
+    fontWeight: 800,
+    textDecoration: "none",
   },
 };
