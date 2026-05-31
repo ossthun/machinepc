@@ -25,9 +25,55 @@ export default function Home() {
           </Link>
         </div>
 
+        <section style={styles.infoSection}>
+          <h2 style={styles.sectionTitle}>Comment ça marche ?</h2>
+          <p style={styles.infoText}>
+            Choisis un pronom et un verbe. La machine montre comment former le
+            passé composé: auxiliaire, participe passé et accord si nécessaire.
+          </p>
+        </section>
+
+        <section style={styles.linkSection}>
+          <h2 style={styles.sectionTitle}>Apprendre le passé composé</h2>
+
+          <div style={styles.contentLinks}>
+            <Link href="/quest-ce-que-le-passe-compose" style={styles.contentLink}>
+              Qu’est-ce que le passé composé ?
+            </Link>
+
+            <Link href="/avoir-ou-etre" style={styles.contentLink}>
+              Avoir ou être
+            </Link>
+
+            <Link href="/participe-passe" style={styles.contentLink}>
+              Le participe passé
+            </Link>
+
+            <Link href="/verbes-avec-etre" style={styles.contentLink}>
+              Les verbes avec être
+            </Link>
+
+            <Link href="/erreurs-frequentes" style={styles.contentLink}>
+              Erreurs fréquentes
+            </Link>
+
+            <Link href="/pour-les-enseignants" style={styles.contentLink}>
+              Pour les enseignants
+            </Link>
+
+            <Link href="/pour-les-parents" style={styles.contentLink}>
+              Pour les parents
+            </Link>
+
+            <Link href="/faq" style={styles.contentLink}>
+              FAQ
+            </Link>
+          </div>
+        </section>
+
         <footer style={styles.footer}>
           <Link href="/about" style={styles.footerLink}>
-            About
+            À propos
           </Link>
 
           <Link href="/contact" style={styles.footerLink}>
@@ -35,15 +81,15 @@ export default function Home() {
           </Link>
 
           <Link href="/privacy" style={styles.footerLink}>
-            Privacy
+            Confidentialité
           </Link>
 
           <Link href="/terms" style={styles.footerLink}>
-            Terms
+            Conditions
           </Link>
 
           <Link href="/disclaimer" style={styles.footerLink}>
-            Disclaimer
+            Avertissement
           </Link>
         </footer>
       </section>
@@ -63,7 +109,7 @@ const styles = {
   },
 
   card: {
-    maxWidth: "760px",
+    maxWidth: "900px",
     width: "100%",
     padding: "42px",
     borderRadius: "32px",
@@ -115,6 +161,56 @@ const styles = {
     fontWeight: 900,
     textDecoration: "none",
     boxShadow: "0 12px 24px rgba(37,99,235,.3)",
+  },
+
+  infoSection: {
+    marginTop: "36px",
+    padding: "24px",
+    borderRadius: "24px",
+    background: "#f8fafc",
+    border: "1px solid #e2e8f0",
+  },
+
+  linkSection: {
+    marginTop: "24px",
+    padding: "24px",
+    borderRadius: "24px",
+    background: "#fefce8",
+    border: "1px solid #fde68a",
+  },
+
+  sectionTitle: {
+    margin: "0 0 12px",
+    fontSize: "1.6rem",
+    color: "#172033",
+  },
+
+  infoText: {
+    margin: 0,
+    fontSize: "1.05rem",
+    lineHeight: 1.6,
+    color: "#475569",
+  },
+
+  contentLinks: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+    gap: "12px",
+    marginTop: "18px",
+  },
+
+  contentLink: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "54px",
+    padding: "12px 14px",
+    borderRadius: "16px",
+    background: "white",
+    color: "#2563eb",
+    fontWeight: 900,
+    textDecoration: "none",
+    border: "1px solid #e2e8f0",
   },
 
   footer: {
