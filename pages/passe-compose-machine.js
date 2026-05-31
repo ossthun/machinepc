@@ -5,32 +5,18 @@ const pronouns = [
   { key: "tu", label: "tu", avoir: "as", etre: "es", gender: "m", plural: false },
   { key: "il", label: "il", avoir: "a", etre: "est", gender: "m", plural: false },
   { key: "elle", label: "elle", avoir: "a", etre: "est", gender: "f", plural: false },
-  { key: "nous_m", label: "nous", avoir: "avons", etre: "sommes", gender: "m", plural: true },
-  { key: "nous_f", label: "nous", avoir: "avons", etre: "sommes", gender: "f", plural: true },
-  { key: "vous_m", label: "vous", avoir: "avez", etre: "êtes", gender: "m", plural: true },
-  { key: "vous_f", label: "vous", avoir: "avez", etre: "êtes", gender: "f", plural: true },
+  { key: "nous_m", label: "nous masculin", avoir: "avons", etre: "sommes", gender: "m", plural: true },
+  { key: "nous_f", label: "nous féminin", avoir: "avons", etre: "sommes", gender: "f", plural: true },
+  { key: "vous_m", label: "vous masculin", avoir: "avez", etre: "êtes", gender: "m", plural: true },
+  { key: "vous_f", label: "vous féminin", avoir: "avez", etre: "êtes", gender: "f", plural: true },
   { key: "ils", label: "ils", avoir: "ont", etre: "sont", gender: "m", plural: true },
   { key: "elles", label: "elles", avoir: "ont", etre: "sont", gender: "f", plural: true },
 ];
 
 const etreVerbs = new Set([
-  "aller",
-  "venir",
-  "arriver",
-  "partir",
-  "entrer",
-  "sortir",
-  "monter",
-  "descendre",
-  "naître",
-  "mourir",
-  "rester",
-  "tomber",
-  "retourner",
-  "passer",
-  "devenir",
-  "revenir",
-  "rentrer",
+  "aller", "venir", "arriver", "partir", "entrer", "sortir", "monter",
+  "descendre", "naître", "mourir", "rester", "tomber", "retourner",
+  "passer", "devenir", "revenir", "rentrer",
 ]);
 
 const irregularParticiples = {
@@ -77,6 +63,7 @@ function getPastParticiple(verb) {
 
 function agree(participle, pronoun, auxiliary) {
   if (auxiliary !== "être" || participle === "?") return participle;
+
   let result = participle;
   if (pronoun.gender === "f") result += "e";
   if (pronoun.plural) result += "s";
@@ -98,49 +85,67 @@ export default function PasseComposeMachine() {
   const result = useMemo(() => {
     const verb = normalizeVerb(verbInput);
     const pronoun = pronouns.find((p) => p.key === pronounKey);
+
     const auxiliary = etreVerbs.has(verb) ? "être" : "avoir";
     const auxiliaryForm = auxiliary === "être" ? pronoun.etre : pronoun.avoir;
+
     const rawParticiple = getPastParticiple(verb);
     const finalParticiple = agree(rawParticiple, pronoun, auxiliary);
-    const firstPart = elide(pronoun.label, auxiliaryForm);
-    const sentence = rawParticiple === "?" ? "Verbe inconnu" : `${firstPart} ${finalParticiple}`;
 
-    return { verb, pronoun, auxiliary, auxiliaryForm, rawParticiple, finalParticiple, sentence };
+    const cleanSubject = pronoun.label.split(" ")[0];
+    const firstPart = elide(cleanSubject, auxiliaryForm);
+
+    const sentence =
+      rawParticiple === "?" ? "Verbe inconnu" : `${firstPart} ${finalParticiple}`;
+
+    return {
+      verb,
+      pronoun,
+      auxiliary,
+      auxiliaryForm,
+      rawParticiple,
+      finalParticiple,
+      sentence,
+    };
   }, [verbInput, pronounKey]);
 
   function startMachine() {
     setPhase("running");
     setTimeout(() => setPhase("auxiliary"), 1000);
-    setTimeout(() => setPhase("participle"), 2200);
-    setTimeout(() => setPhase("done"), 3600);
+    setTimeout(() => setPhase("participle"), 2300);
+    setTimeout(() => setPhase("done"), 3800);
   }
 
   const showAux = ["auxiliary", "participle", "done"].includes(phase);
   const showParticiple = ["participle", "done"].includes(phase);
   const showFinal = phase === "done";
+  const isMoving = phase !== "idle";
 
   return (
     <main className="page">
-      <div className="hero">
+      <section className="hero">
         <div className="badge">Français · Passé composé</div>
         <h1>La machine à fabriquer le passé composé</h1>
-        <p>Le verbe avance sur le tapis. Les deux machines construisent la forme correcte.</p>
-      </div>
+        <p>
+          Le verbe avance sur le tapis roulant. Les machines ajoutent l’auxiliaire
+          et le participe passé.
+        </p>
+      </section>
 
       <section className="panel">
         <label>
-          Pronom
+          <span>Pronom</span>
           <select value={pronounKey} onChange={(e) => setPronounKey(e.target.value)}>
             {pronouns.map((p) => (
               <option key={p.key} value={p.key}>
-                {p.key.includes("_f") ? `${p.label} féminin` : p.key.includes("_m") ? `${p.label} masculin` : p.label}
+                {p.label}
               </option>
             ))}
           </select>
         </label>
 
         <label>
-          Verbe à l’infinitif
+          <span>Verbe à l’infinitif</span>
           <input value={verbInput} onChange={(e) => setVerbInput(e.target.value)} />
         </label>
 
@@ -149,28 +154,41 @@ export default function PasseComposeMachine() {
 
       <section className="factory">
         <div className="machine blue">
-          <div className="light"></div>
+          <div className="light" />
           <div className="emoji">🤖</div>
           <h3>Machine 1</h3>
           <p>Choisit l’auxiliaire</p>
-          <div className={`slot ${showAux ? "reveal" : ""}`}>{showAux ? result.auxiliary : "???"}</div>
+          <div className={`slot ${showAux ? "reveal" : ""}`}>
+            {showAux ? result.auxiliary : "???"}
+          </div>
         </div>
 
-        <div className="beltWrap">
-          <div className="belt">
-            <div className={`box ${phase !== "idle" ? "move" : ""}`}>{result.verb || "verbe"}</div>
+        <div className="beltArea">
+          <div className={`belt ${isMoving ? "beltMoving" : ""}`}>
+            <div className="beltSurface" />
+            <div className="beltShine" />
+            <div className={`box ${isMoving ? "move" : ""}`}>
+              {result.verb || "verbe"}
+            </div>
           </div>
-          <div className="rollers">
-            <span></span><span></span><span></span><span></span><span></span>
+
+          <div className="rollerRow">
+            <div className={`roller ${isMoving ? "spin" : ""}`} />
+            <div className={`roller small ${isMoving ? "spin" : ""}`} />
+            <div className={`roller small ${isMoving ? "spin" : ""}`} />
+            <div className={`roller small ${isMoving ? "spin" : ""}`} />
+            <div className={`roller ${isMoving ? "spin" : ""}`} />
           </div>
         </div>
 
         <div className="machine orange">
-          <div className="light"></div>
+          <div className="light" />
           <div className="emoji">🛠️</div>
           <h3>Machine 2</h3>
           <p>Ajoute le participe passé</p>
-          <div className={`slot ${showParticiple ? "reveal" : ""}`}>{showParticiple ? result.finalParticiple : "???"}</div>
+          <div className={`slot ${showParticiple ? "reveal" : ""}`}>
+            {showParticiple ? result.finalParticiple : "???"}
+          </div>
         </div>
       </section>
 
@@ -181,12 +199,22 @@ export default function PasseComposeMachine() {
           <>
             <div className="stamp">Résultat</div>
             <h2>{result.sentence}</h2>
+
             <div className="steps">
-              <p>1. Auxiliaire: <strong>{result.auxiliary}</strong></p>
-              <p>2. Forme conjuguée: <strong>{result.auxiliaryForm}</strong></p>
-              <p>3. Participe passé: <strong>{result.rawParticiple}</strong></p>
+              <p>
+                1. Auxiliaire: <strong>{result.auxiliary}</strong>
+              </p>
+              <p>
+                2. Forme conjuguée: <strong>{result.auxiliaryForm}</strong>
+              </p>
+              <p>
+                3. Participe passé: <strong>{result.rawParticiple}</strong>
+              </p>
               {result.auxiliary === "être" && (
-                <p>4. Accord avec le sujet: <strong>{result.finalParticiple}</strong></p>
+                <p>
+                  4. Accord avec le sujet:{" "}
+                  <strong>{result.finalParticiple}</strong>
+                </p>
               )}
             </div>
           </>
@@ -217,7 +245,7 @@ export default function PasseComposeMachine() {
           border-radius: 999px;
           background: #172033;
           color: white;
-          font-weight: 800;
+          font-weight: 900;
           margin-bottom: 12px;
         }
 
@@ -235,13 +263,14 @@ export default function PasseComposeMachine() {
         .panel {
           max-width: 900px;
           margin: 0 auto 32px;
-          background: rgba(255, 255, 255, 0.8);
+          background: rgba(255, 255, 255, 0.82);
           border: 2px solid white;
           border-radius: 26px;
           padding: 18px;
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
+          align-items: flex-end;
           gap: 16px;
           box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
           backdrop-filter: blur(10px);
@@ -252,32 +281,49 @@ export default function PasseComposeMachine() {
           flex-direction: column;
           gap: 6px;
           font-weight: 900;
+          flex: 1;
+          min-width: 220px;
         }
 
-        select, input {
-          min-width: 210px;
-          padding: 13px;
+        label span {
+          height: 22px;
+        }
+
+        select,
+        input,
+        button {
+          height: 56px;
+          box-sizing: border-box;
           border-radius: 16px;
-          border: 2px solid #cbd5e1;
           font-size: 1rem;
+        }
+
+        select,
+        input {
+          width: 100%;
+          padding: 0 16px;
+          border: 2px solid #cbd5e1;
           background: white;
         }
 
         button {
-          align-self: end;
-          padding: 14px 24px;
+          min-width: 220px;
+          padding: 0 24px;
           border: 0;
-          border-radius: 18px;
           background: linear-gradient(135deg, #2563eb, #7c3aed);
           color: white;
-          font-size: 1rem;
           font-weight: 950;
           cursor: pointer;
           box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+          transition: transform 0.15s ease;
+        }
+
+        button:hover {
+          transform: translateY(-2px);
         }
 
         .factory {
-          max-width: 1100px;
+          max-width: 1120px;
           margin: 0 auto;
           display: grid;
           grid-template-columns: 210px 1fr 210px;
@@ -300,7 +346,7 @@ export default function PasseComposeMachine() {
           content: "";
           position: absolute;
           inset: 12px;
-          border: 3px dashed rgba(255,255,255,.35);
+          border: 3px dashed rgba(255, 255, 255, 0.35);
           border-radius: 26px;
         }
 
@@ -336,7 +382,7 @@ export default function PasseComposeMachine() {
 
         .machine p {
           margin: 0 0 14px;
-          opacity: .9;
+          opacity: 0.9;
         }
 
         .slot {
@@ -350,43 +396,72 @@ export default function PasseComposeMachine() {
           border-radius: 16px;
           font-size: 1.25rem;
           font-weight: 950;
-          border: 3px solid rgba(255,255,255,.35);
+          border: 3px solid rgba(255, 255, 255, 0.35);
         }
 
         .slot.reveal {
           background: #fef3c7;
           color: #111827;
-          animation: pop .35s ease-out;
+          animation: pop 0.35s ease-out;
         }
 
-        .beltWrap {
+        .beltArea {
           position: relative;
         }
 
         .belt {
           position: relative;
-          height: 130px;
-          border-radius: 70px;
+          height: 140px;
+          border-radius: 76px;
           overflow: hidden;
-          background:
-            repeating-linear-gradient(90deg, #334155 0 42px, #475569 42px 84px);
+          background: #1e293b;
           box-shadow:
-            inset 0 8px 18px rgba(0,0,0,.35),
-            0 18px 32px rgba(15,23,42,.18);
+            inset 0 10px 20px rgba(0, 0, 0, 0.45),
+            0 18px 32px rgba(15, 23, 42, 0.18);
+          border: 8px solid #334155;
         }
 
-        .belt::after {
-          content: "";
+        .beltSurface {
           position: absolute;
-          inset: 18px;
-          border-radius: 60px;
-          border: 3px solid rgba(255,255,255,.15);
+          inset: 16px;
+          border-radius: 70px;
+          background:
+            linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.08),
+              rgba(255, 255, 255, 0.02),
+              rgba(0, 0, 0, 0.12)
+            ),
+            repeating-linear-gradient(
+              90deg,
+              #475569 0px,
+              #475569 34px,
+              #334155 34px,
+              #334155 68px
+            );
+          background-size: auto, 136px 100%;
+          animation: beltPaused 1s linear infinite;
+        }
+
+        .beltMoving .beltSurface {
+          animation: beltMove 0.55s linear infinite;
+        }
+
+        .beltShine {
+          position: absolute;
+          left: 24px;
+          right: 24px;
+          top: 26px;
+          height: 22px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.12);
+          filter: blur(1px);
         }
 
         .box {
           position: absolute;
           left: 24px;
-          top: 34px;
+          top: 36px;
           z-index: 3;
           padding: 18px 24px;
           background: #fff;
@@ -394,26 +469,40 @@ export default function PasseComposeMachine() {
           border-radius: 22px;
           font-size: 1.3rem;
           font-weight: 950;
-          box-shadow: 0 12px 24px rgba(0,0,0,.18);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
         }
 
         .box.move {
-          animation: travel 3.4s ease-in-out forwards;
+          animation: travel 3.6s ease-in-out forwards;
         }
 
-        .rollers {
+        .rollerRow {
           display: flex;
-          justify-content: space-around;
+          justify-content: space-between;
+          align-items: center;
           margin-top: 14px;
+          padding: 0 18px;
         }
 
-        .rollers span {
-          width: 34px;
-          height: 34px;
+        .roller {
+          width: 42px;
+          height: 42px;
           border-radius: 50%;
-          background: #64748b;
-          border: 6px solid #334155;
-          animation: spin 1s linear infinite;
+          background:
+            radial-gradient(circle at center, #94a3b8 0 18%, transparent 19%),
+            conic-gradient(#334155 0 25%, #64748b 25% 50%, #334155 50% 75%, #64748b 75%);
+          border: 6px solid #1e293b;
+          box-shadow: 0 5px 10px rgba(15, 23, 42, 0.25);
+        }
+
+        .roller.small {
+          width: 30px;
+          height: 30px;
+          opacity: 0.8;
+        }
+
+        .roller.spin {
+          animation: spin 0.55s linear infinite;
         }
 
         .result {
@@ -422,15 +511,15 @@ export default function PasseComposeMachine() {
           padding: 26px;
           border-radius: 30px;
           text-align: center;
-          background: rgba(255,255,255,.75);
+          background: rgba(255, 255, 255, 0.75);
           border: 2px solid white;
-          box-shadow: 0 18px 38px rgba(15,23,42,.12);
-          opacity: .7;
+          box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
+          opacity: 0.72;
         }
 
         .result.show {
           opacity: 1;
-          animation: resultPop .5s ease-out;
+          animation: resultPop 0.5s ease-out;
         }
 
         .stamp {
@@ -458,30 +547,78 @@ export default function PasseComposeMachine() {
         }
 
         @keyframes travel {
-          0% { left: 24px; transform: rotate(-2deg); }
-          35% { left: 35%; transform: rotate(2deg); }
-          68% { left: 58%; transform: rotate(-2deg); }
-          100% { left: calc(100% - 155px); transform: rotate(0); }
+          0% {
+            left: 24px;
+            transform: rotate(-2deg);
+          }
+          36% {
+            left: 34%;
+            transform: rotate(2deg);
+          }
+          68% {
+            left: 58%;
+            transform: rotate(-2deg);
+          }
+          100% {
+            left: calc(100% - 160px);
+            transform: rotate(0deg);
+          }
         }
 
-        @keyframes pop {
-          from { transform: scale(.6); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
+        @keyframes beltMove {
+          from {
+            background-position: 0 0, 0 0;
+          }
+          to {
+            background-position: 0 0, -136px 0;
+          }
         }
 
-        @keyframes resultPop {
-          from { transform: translateY(20px) scale(.95); }
-          to { transform: translateY(0) scale(1); }
-        }
-
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: .35; }
+        @keyframes beltPaused {
+          from {
+            background-position: 0 0, 0 0;
+          }
+          to {
+            background-position: 0 0, 0 0;
+          }
         }
 
         @keyframes spin {
-          from { transform: rotate(0); }
-          to { transform: rotate(360deg); }
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes pop {
+          from {
+            transform: scale(0.6);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        @keyframes resultPop {
+          from {
+            transform: translateY(20px) scale(0.95);
+          }
+          to {
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes blink {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.35;
+          }
         }
 
         @media (max-width: 850px) {
@@ -494,7 +631,15 @@ export default function PasseComposeMachine() {
           }
 
           .belt {
-            height: 115px;
+            height: 120px;
+          }
+
+          .panel {
+            align-items: stretch;
+          }
+
+          button {
+            width: 100%;
           }
         }
       `}</style>
