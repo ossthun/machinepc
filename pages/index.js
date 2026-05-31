@@ -27,6 +27,7 @@ export default function Home() {
 
         <section style={styles.infoSection}>
           <h2 style={styles.sectionTitle}>Comment ça marche ?</h2>
+
           <p style={styles.infoText}>
             Choisis un pronom et un verbe. La machine montre comment former le
             passé composé: auxiliaire, participe passé et accord si nécessaire.
@@ -34,39 +35,51 @@ export default function Home() {
         </section>
 
         <section style={styles.linkSection}>
-          <h2 style={styles.sectionTitle}>Apprendre le passé composé</h2>
+          <h2 style={styles.sectionTitle}>
+            Apprendre le passé composé
+          </h2>
 
           <div style={styles.contentLinks}>
-            <Link href="/quest-ce-que-le-passe-compose" style={styles.contentLink}>
+            <Link
+              href="/quest-ce-que-le-passe-compose"
+              style={styles.contentLink}
+            >
               Qu’est-ce que le passé composé ?
             </Link>
 
-            <Link href="/avoir-ou-etre" style={styles.contentLink}>
+            <Link
+              href="/avoir-ou-etre"
+              style={styles.contentLink}
+            >
               Avoir ou être
             </Link>
 
-            <Link href="/participe-passe" style={styles.contentLink}>
+            <Link
+              href="/participe-passe"
+              style={styles.contentLink}
+            >
               Le participe passé
             </Link>
 
-            <Link href="/verbes-avec-etre" style={styles.contentLink}>
+            <Link
+              href="/verbes-avec-etre"
+              style={styles.contentLink}
+            >
               Les verbes avec être
             </Link>
 
-            <Link href="/erreurs-frequentes" style={styles.contentLink}>
+            <Link
+              href="/erreurs-frequentes"
+              style={styles.contentLink}
+            >
               Erreurs fréquentes
             </Link>
 
-            <Link href="/pour-les-enseignants" style={styles.contentLink}>
+            <Link
+              href="/pour-les-enseignants"
+              style={styles.contentLink}
+            >
               Pour les enseignants
-            </Link>
-
-            <Link href="/pour-les-parents" style={styles.contentLink}>
-              Pour les parents
-            </Link>
-
-            <Link href="/faq" style={styles.contentLink}>
-              FAQ
             </Link>
           </div>
         </section>
