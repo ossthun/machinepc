@@ -17,30 +17,58 @@ export default function Home() {
 
         <div style={styles.featureGrid}>
           <Link href="/passe-compose-machine" style={styles.featureCard}>
-            <div style={styles.featureIcon}>⚙️</div>
-            <div>
-              <h2 style={styles.featureTitle}>Machine automatique</h2>
+            <img
+              src="/machine-card.png"
+              alt="Machine du passé composé"
+              style={styles.cardImage}
+            />
+
+            <div style={styles.featureContent}>
+              <div style={styles.featureTop}>
+                <div style={styles.featureIcon}>⚙️</div>
+
+                <h2 style={styles.featureTitle}>
+                  Machine automatique
+                </h2>
+              </div>
+
               <p style={styles.featureText}>
                 Regarde la machine construire le passé composé pas à pas.
               </p>
+
+              <div style={styles.featureArrow}>→</div>
             </div>
-            <div style={styles.featureArrow}>→</div>
           </Link>
 
           <Link href="/passe-compose-training" style={styles.featureCardAlt}>
-            <div style={styles.featureIcon}>✍️</div>
-            <div>
-              <h2 style={styles.featureTitle}>Mode entraînement</h2>
+            <img
+              src="/training-card.png"
+              alt="Élève qui étudie le passé composé"
+              style={styles.cardImage}
+            />
+
+            <div style={styles.featureContent}>
+              <div style={styles.featureTop}>
+                <div style={styles.featureIcon}>✍️</div>
+
+                <h2 style={styles.featureTitle}>
+                  Mode entraînement
+                </h2>
+              </div>
+
               <p style={styles.featureText}>
                 Écris toi-même l’auxiliaire et le participe passé.
               </p>
+
+              <div style={styles.featureArrow}>→</div>
             </div>
-            <div style={styles.featureArrow}>→</div>
           </Link>
         </div>
 
         <section style={styles.infoSection}>
-          <h2 style={styles.sectionTitle}>Comment ça marche ?</h2>
+          <h2 style={styles.sectionTitle}>
+            Comment ça marche ?
+          </h2>
 
           <p style={styles.infoText}>
             Choisis un pronom et un verbe. La machine montre comment former le
@@ -141,7 +169,7 @@ const styles = {
     width: "100%",
     padding: "46px",
     borderRadius: "36px",
-    background: "rgba(255,255,255,.9)",
+    background: "rgba(255,255,255,.92)",
     textAlign: "center",
     boxShadow: "0 28px 70px rgba(15,23,42,.18)",
     border: "2px solid rgba(255,255,255,.9)",
@@ -174,75 +202,92 @@ const styles = {
 
   featureGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "22px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+    gap: "24px",
     marginBottom: "38px",
   },
 
   featureCard: {
-    position: "relative",
-    minHeight: "210px",
-    padding: "26px",
-    borderRadius: "30px",
-    textAlign: "left",
-    textDecoration: "none",
-    color: "white",
-    background:
-      "linear-gradient(145deg, #0f766e, #0891b2)",
-    boxShadow: "0 22px 40px rgba(8,145,178,.28)",
+    minHeight: "460px",
+    padding: "18px",
+    borderRadius: "32px",
     overflow: "hidden",
+    textDecoration: "none",
+    background: "linear-gradient(145deg, #0f766e, #0891b2)",
+    boxShadow: "0 22px 40px rgba(8,145,178,.28)",
+    color: "white",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
     border: "2px solid rgba(255,255,255,.35)",
   },
 
   featureCardAlt: {
-    position: "relative",
-    minHeight: "210px",
-    padding: "26px",
-    borderRadius: "30px",
-    textAlign: "left",
-    textDecoration: "none",
-    color: "white",
-    background:
-      "linear-gradient(145deg, #7c3aed, #2563eb)",
-    boxShadow: "0 22px 40px rgba(37,99,235,.28)",
+    minHeight: "460px",
+    padding: "18px",
+    borderRadius: "32px",
     overflow: "hidden",
+    textDecoration: "none",
+    background: "linear-gradient(145deg, #7c3aed, #2563eb)",
+    boxShadow: "0 22px 40px rgba(37,99,235,.28)",
+    color: "white",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
     border: "2px solid rgba(255,255,255,.35)",
   },
 
+  cardImage: {
+    width: "100%",
+    height: "250px",
+    objectFit: "cover",
+    borderRadius: "24px",
+    marginBottom: "18px",
+    boxShadow: "0 12px 28px rgba(0,0,0,.22)",
+    display: "block",
+  },
+
+  featureContent: {
+    position: "relative",
+    textAlign: "left",
+    padding: "4px 4px 8px",
+    flex: 1,
+  },
+
+  featureTop: {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    marginBottom: "14px",
+  },
+
   featureIcon: {
-    width: "64px",
-    height: "64px",
-    borderRadius: "22px",
+    width: "54px",
+    height: "54px",
+    borderRadius: "18px",
     background: "rgba(255,255,255,.2)",
     display: "grid",
     placeItems: "center",
-    fontSize: "2.1rem",
-    boxShadow: "inset 0 0 0 2px rgba(255,255,255,.25)",
+    fontSize: "1.8rem",
+    flexShrink: 0,
   },
 
   featureTitle: {
-    margin: "20px 0 8px",
-    fontSize: "1.75rem",
+    margin: 0,
+    fontSize: "1.7rem",
     lineHeight: 1.1,
   },
 
   featureText: {
     margin: 0,
-    color: "rgba(255,255,255,.9)",
+    color: "rgba(255,255,255,.92)",
     fontSize: "1.05rem",
     lineHeight: 1.45,
+    paddingRight: "56px",
   },
 
   featureArrow: {
     position: "absolute",
-    right: "24px",
-    bottom: "20px",
+    right: "4px",
+    bottom: "4px",
     width: "44px",
     height: "44px",
     borderRadius: "50%",
