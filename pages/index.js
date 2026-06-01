@@ -15,13 +15,27 @@ export default function Home() {
           un auxiliaire et un participe passé.
         </p>
 
-        <div style={styles.buttonContainer}>
-          <Link href="/passe-compose-machine" style={styles.button}>
-            Machine automatique ⚙️
+        <div style={styles.featureGrid}>
+          <Link href="/passe-compose-machine" style={styles.featureCard}>
+            <div style={styles.featureIcon}>⚙️</div>
+            <div>
+              <h2 style={styles.featureTitle}>Machine automatique</h2>
+              <p style={styles.featureText}>
+                Regarde la machine construire le passé composé pas à pas.
+              </p>
+            </div>
+            <div style={styles.featureArrow}>→</div>
           </Link>
 
-          <Link href="/passe-compose-training" style={styles.button}>
-            Mode entraînement ✍️
+          <Link href="/passe-compose-training" style={styles.featureCardAlt}>
+            <div style={styles.featureIcon}>✍️</div>
+            <div>
+              <h2 style={styles.featureTitle}>Mode entraînement</h2>
+              <p style={styles.featureText}>
+                Écris toi-même l’auxiliaire et le participe passé.
+              </p>
+            </div>
+            <div style={styles.featureArrow}>→</div>
           </Link>
         </div>
 
@@ -81,13 +95,6 @@ export default function Home() {
             >
               Erreurs fréquentes
             </Link>
-
-            <Link
-              href="/pour-les-enseignants"
-              style={styles.contentLink}
-            >
-              Pour les enseignants
-            </Link>
           </div>
         </section>
 
@@ -125,17 +132,19 @@ const styles = {
     justifyContent: "center",
     padding: "24px",
     fontFamily: "system-ui, sans-serif",
-    background: "linear-gradient(135deg, #e0f2fe, #fef9c3)",
+    background:
+      "radial-gradient(circle at top left, #fde68a, transparent 28%), radial-gradient(circle at top right, #bfdbfe, transparent 30%), linear-gradient(135deg, #f8fafc, #e0f2fe)",
   },
 
   card: {
-    maxWidth: "900px",
+    maxWidth: "980px",
     width: "100%",
-    padding: "42px",
-    borderRadius: "32px",
-    background: "white",
+    padding: "46px",
+    borderRadius: "36px",
+    background: "rgba(255,255,255,.9)",
     textAlign: "center",
-    boxShadow: "0 22px 50px rgba(15,23,42,.16)",
+    boxShadow: "0 28px 70px rgba(15,23,42,.18)",
+    border: "2px solid rgba(255,255,255,.9)",
   },
 
   badge: {
@@ -149,42 +158,103 @@ const styles = {
   },
 
   title: {
-    fontSize: "clamp(2rem, 6vw, 4rem)",
+    fontSize: "clamp(2.2rem, 6vw, 4.4rem)",
     lineHeight: 1,
     margin: "0 0 18px",
     color: "#172033",
   },
 
   text: {
+    maxWidth: "680px",
+    margin: "0 auto 36px",
     fontSize: "1.2rem",
     lineHeight: 1.5,
     color: "#475569",
-    marginBottom: "32px",
   },
 
-  buttonContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: "16px",
+  featureGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: "22px",
+    marginBottom: "38px",
   },
 
-  button: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    minWidth: "260px",
-    padding: "15px 24px",
-    borderRadius: "18px",
-    background: "linear-gradient(135deg, #2563eb, #7c3aed)",
-    color: "white",
-    fontWeight: 900,
+  featureCard: {
+    position: "relative",
+    minHeight: "210px",
+    padding: "26px",
+    borderRadius: "30px",
+    textAlign: "left",
     textDecoration: "none",
-    boxShadow: "0 12px 24px rgba(37,99,235,.3)",
+    color: "white",
+    background:
+      "linear-gradient(145deg, #0f766e, #0891b2)",
+    boxShadow: "0 22px 40px rgba(8,145,178,.28)",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    border: "2px solid rgba(255,255,255,.35)",
+  },
+
+  featureCardAlt: {
+    position: "relative",
+    minHeight: "210px",
+    padding: "26px",
+    borderRadius: "30px",
+    textAlign: "left",
+    textDecoration: "none",
+    color: "white",
+    background:
+      "linear-gradient(145deg, #7c3aed, #2563eb)",
+    boxShadow: "0 22px 40px rgba(37,99,235,.28)",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    border: "2px solid rgba(255,255,255,.35)",
+  },
+
+  featureIcon: {
+    width: "64px",
+    height: "64px",
+    borderRadius: "22px",
+    background: "rgba(255,255,255,.2)",
+    display: "grid",
+    placeItems: "center",
+    fontSize: "2.1rem",
+    boxShadow: "inset 0 0 0 2px rgba(255,255,255,.25)",
+  },
+
+  featureTitle: {
+    margin: "20px 0 8px",
+    fontSize: "1.75rem",
+    lineHeight: 1.1,
+  },
+
+  featureText: {
+    margin: 0,
+    color: "rgba(255,255,255,.9)",
+    fontSize: "1.05rem",
+    lineHeight: 1.45,
+  },
+
+  featureArrow: {
+    position: "absolute",
+    right: "24px",
+    bottom: "20px",
+    width: "44px",
+    height: "44px",
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "rgba(255,255,255,.22)",
+    fontSize: "1.6rem",
+    fontWeight: 900,
   },
 
   infoSection: {
-    marginTop: "36px",
+    marginTop: "8px",
     padding: "24px",
     borderRadius: "24px",
     background: "#f8fafc",
@@ -236,7 +306,6 @@ const styles = {
   footer: {
     marginTop: "34px",
     paddingTop: "22px",
-    borderTop: "1px solid #e2e8f0",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
