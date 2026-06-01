@@ -62,6 +62,13 @@ export default function Home() {
             </Link>
 
             <Link
+              href="/list" 
+              style={styles.contentLink}>
+            >  
+              Liste des participes passés
+            </Link>
+
+            <Link
               href="/verbes-avec-etre"
               style={styles.contentLink}
             >
