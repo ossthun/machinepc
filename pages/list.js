@@ -5,80 +5,140 @@ const groups = [
     title: "Verbes en -er",
     verbs: [
       ["aimer", "aimé"],
+      ["apporter", "apporté"],
       ["arriver", "arrivé"],
       ["chanter", "chanté"],
       ["chercher", "cherché"],
       ["commencer", "commencé"],
+      ["continuer", "continué"],
+      ["demander", "demandé"],
       ["donner", "donné"],
       ["écouter", "écouté"],
       ["entrer", "entré"],
+      ["étudier", "étudié"],
+      ["fermer", "fermé"],
+      ["habiter", "habité"],
       ["jouer", "joué"],
       ["manger", "mangé"],
+      ["marcher", "marché"],
+      ["montrer", "montré"],
+      ["oublier", "oublié"],
       ["parler", "parlé"],
+      ["penser", "pensé"],
+      ["porter", "porté"],
       ["regarder", "regardé"],
       ["rester", "resté"],
-      ["tomber", "tombé"],
+      ["retourner", "retourné"],
       ["travailler", "travaillé"],
+      ["trouver", "trouvé"],
+      ["tomber", "tombé"],
+      ["visiter", "visité"],
+      ["voyager", "voyagé"],
     ],
   },
   {
     title: "Verbes en -ir",
     verbs: [
+      ["agir", "agi"],
+      ["applaudir", "applaudi"],
       ["choisir", "choisi"],
+      ["dormir", "dormi"],
       ["finir", "fini"],
       ["grandir", "grandi"],
-      ["réussir", "réussi"],
-      ["remplir", "rempli"],
-      ["réfléchir", "réfléchi"],
-      ["agir", "agi"],
+      ["grossir", "grossi"],
+      ["guérir", "guéri"],
+      ["maigrir", "maigri"],
       ["obéir", "obéi"],
       ["partir", "parti"],
-      ["sortir", "sorti"],
-      ["dormir", "dormi"],
-      ["servir", "servi"],
+      ["punir", "puni"],
+      ["réfléchir", "réfléchi"],
+      ["remplir", "rempli"],
+      ["réussir", "réussi"],
+      ["rougir", "rougi"],
       ["sentir", "senti"],
+      ["servir", "servi"],
+      ["sortir", "sorti"],
+      ["vieillir", "vieilli"],
       ["ouvrir", "ouvert"],
       ["offrir", "offert"],
+      ["couvrir", "couvert"],
+      ["découvrir", "découvert"],
+      ["souffrir", "souffert"],
+      ["courir", "couru"],
+      ["mourir", "mort"],
+      ["venir", "venu"],
+      ["devenir", "devenu"],
+      ["revenir", "revenu"],
     ],
   },
   {
     title: "Verbes en -re",
     verbs: [
       ["attendre", "attendu"],
+      ["comprendre", "compris"],
+      ["conduire", "conduit"],
+      ["connaître", "connu"],
+      ["construire", "construit"],
+      ["croire", "cru"],
       ["descendre", "descendu"],
+      ["dire", "dit"],
+      ["écrire", "écrit"],
       ["entendre", "entendu"],
-      ["perdre", "perdu"],
-      ["répondre", "répondu"],
-      ["rendre", "rendu"],
-      ["vendre", "vendu"],
+      ["faire", "fait"],
+      ["lire", "lu"],
       ["mettre", "mis"],
+      ["naître", "né"],
+      ["perdre", "perdu"],
       ["prendre", "pris"],
       ["apprendre", "appris"],
-      ["comprendre", "compris"],
-      ["écrire", "écrit"],
-      ["lire", "lu"],
-      ["dire", "dit"],
-      ["faire", "fait"],
+      ["permettre", "permis"],
+      ["promettre", "promis"],
+      ["répondre", "répondu"],
+      ["rendre", "rendu"],
+      ["rire", "ri"],
+      ["suivre", "suivi"],
+      ["vivre", "vécu"],
+      ["vendre", "vendu"],
+      ["traduire", "traduit"],
+      ["produire", "produit"],
+      ["réduire", "réduit"],
+      ["plaire", "plu"],
+      ["taire", "tu"],
     ],
   },
   {
     title: "Verbes en -oir",
     verbs: [
-      ["avoir", "eu"],
-      ["voir", "vu"],
-      ["savoir", "su"],
-      ["pouvoir", "pu"],
-      ["vouloir", "voulu"],
-      ["devoir", "dû"],
-      ["recevoir", "reçu"],
       ["apercevoir", "aperçu"],
+      ["asseoir", "assis"],
+      ["avoir", "eu"],
       ["boire", "bu"],
-      ["croire", "cru"],
+      ["décevoir", "déçu"],
+      ["devoir", "dû"],
       ["falloir", "fallu"],
       ["pleuvoir", "plu"],
-      ["valoir", "valu"],
-      ["s’asseoir", "assis"],
+      ["pouvoir", "pu"],
       ["prévoir", "prévu"],
+      ["recevoir", "reçu"],
+      ["savoir", "su"],
+      ["valoir", "valu"],
+      ["voir", "vu"],
+      ["vouloir", "voulu"],
+      ["entrevoir", "entrevu"],
+      ["revoir", "revu"],
+      ["concevoir", "conçu"],
+      ["percevoir", "perçu"],
+      ["redevoir", "redû"],
+      ["ravoir", "reu"],
+      ["émouvoir", "ému"],
+      ["mouvoir", "mu"],
+      ["promouvoir", "promu"],
+      ["pourvoir", "pourvu"],
+      ["entrevoir", "entrevu"],
+      ["prévaloir", "prévalu"],
+      ["équivaloir", "équivalu"],
+      ["surseoir", "sursis"],
+      ["choir", "chu"],
     ],
   },
 ];
@@ -94,12 +154,14 @@ export default function ListPage() {
         <div style={styles.badge}>Liste de révision</div>
 
         <h1 style={styles.title}>
-          60 verbes importants au passé composé
+          120 verbes importants au passé composé
         </h1>
 
         <p style={styles.intro}>
-          Voici une liste simple des verbes les plus utiles avec leur participe
-          passé. Attention: certains participes passés sont irréguliers.
+          Voici une liste simple de verbes utiles avec leur participe passé.
+          Les verbes sont organisés selon leur terminaison à l’infinitif:
+          <strong> -er</strong>, <strong>-ir</strong>, <strong>-re</strong> et{" "}
+          <strong>-oir</strong>.
         </p>
 
         <div style={styles.grid}>
@@ -116,8 +178,8 @@ export default function ListPage() {
                 </thead>
 
                 <tbody>
-                  {group.verbs.map(([verb, participle]) => (
-                    <tr key={verb}>
+                  {group.verbs.map(([verb, participle], index) => (
+                    <tr key={`${verb}-${index}`}>
                       <td style={styles.td}>{verb}</td>
                       <td style={styles.tdStrong}>{participle}</td>
                     </tr>
@@ -150,7 +212,7 @@ const styles = {
   },
 
   card: {
-    maxWidth: "1100px",
+    maxWidth: "1200px",
     margin: "0 auto",
     background: "white",
     borderRadius: "32px",
@@ -160,7 +222,7 @@ const styles = {
 
   back: {
     display: "inline-block",
-    marginBottom: "18px",
+    marginBottom: "28px",
     color: "#2563eb",
     fontWeight: 900,
     textDecoration: "none",
@@ -173,7 +235,7 @@ const styles = {
     background: "#172033",
     color: "white",
     fontWeight: 900,
-    marginBottom: "14px",
+    marginBottom: "16px",
   },
 
   title: {
@@ -191,8 +253,9 @@ const styles = {
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
     gap: "20px",
+    alignItems: "stretch",
   },
 
   group: {
@@ -200,18 +263,23 @@ const styles = {
     background: "#f8fafc",
     border: "1px solid #e2e8f0",
     padding: "18px",
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100%",
   },
 
   groupTitle: {
     margin: "0 0 14px",
     fontSize: "1.45rem",
     color: "#1d4ed8",
+    minHeight: "36px",
   },
 
   table: {
     width: "100%",
     borderCollapse: "collapse",
     fontSize: "1rem",
+    tableLayout: "fixed",
   },
 
   th: {
@@ -219,11 +287,14 @@ const styles = {
     padding: "10px 8px",
     borderBottom: "2px solid #cbd5e1",
     color: "#334155",
+    width: "50%",
   },
 
   td: {
     padding: "9px 8px",
     borderBottom: "1px solid #e2e8f0",
+    verticalAlign: "top",
+    wordBreak: "break-word",
   },
 
   tdStrong: {
@@ -231,6 +302,8 @@ const styles = {
     borderBottom: "1px solid #e2e8f0",
     fontWeight: 900,
     color: "#166534",
+    verticalAlign: "top",
+    wordBreak: "break-word",
   },
 
   footer: {
@@ -248,5 +321,11 @@ const styles = {
     color: "#64748b",
     fontWeight: 800,
     textDecoration: "none",
+  },
+
+  "@media (maxWidth: 1000px)": {
+    grid: {
+      gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    },
   },
 };
