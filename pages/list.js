@@ -309,14 +309,14 @@ const styles = {
   footer: {
     marginTop: "34px",
     paddingTop: "22px",
-    borderTop: "1px solid #e2e8f0",
+    borderTop: "none",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
     gap: "14px",
     fontSize: "0.95rem",
   },
-
+  
   footerLink: {
     color: "#64748b",
     fontWeight: 800,
