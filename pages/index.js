@@ -65,17 +65,6 @@ export default function Home() {
           </Link>
         </div>
 
-        <section style={styles.infoSection}>
-          <h2 style={styles.sectionTitle}>
-            Comment ça marche ?
-          </h2>
-
-          <p style={styles.infoText}>
-            Choisis un pronom et un verbe. La machine montre comment former le
-            passé composé: auxiliaire, participe passé et accord si nécessaire.
-          </p>
-        </section>
-
         <section style={styles.linkSection}>
           <h2 style={styles.sectionTitle}>
             Apprendre le passé composé
@@ -310,14 +299,6 @@ const styles = {
     fontWeight: 900,
   },
 
-  infoSection: {
-    marginTop: "8px",
-    padding: "24px",
-    borderRadius: "24px",
-    background: "#f8fafc",
-    border: "1px solid #e2e8f0",
-  },
-
   linkSection: {
     marginTop: "24px",
     padding: "24px",
@@ -330,13 +311,6 @@ const styles = {
     margin: "0 0 12px",
     fontSize: "1.6rem",
     color: "#172033",
-  },
-
-  infoText: {
-    margin: 0,
-    fontSize: "1.05rem",
-    lineHeight: 1.6,
-    color: "#475569",
   },
 
   contentLinks: {
