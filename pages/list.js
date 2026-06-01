@@ -221,13 +221,13 @@ const styles = {
   },
 
   back: {
-    display: "inline-block",
-    marginBottom: "28px",
+    display: "block",
+    marginBottom: "42px",
     color: "#2563eb",
     fontWeight: 900,
     textDecoration: "none",
   },
-
+  
   badge: {
     display: "inline-block",
     padding: "8px 14px",
