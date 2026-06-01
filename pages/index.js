@@ -118,6 +118,18 @@ export default function Home() {
             </Link>
 
             <Link
+              href="/ex1"
+              style={styles.contentLink}>
+              Exercice 1: auxiliaire
+            </Link>
+
+            <Link
+              href="/ex2"
+              style={styles.contentLink}>
+              Exercice 2: formes complètes
+            </Link>
+
+            <Link
               href="/erreurs-frequentes"
               style={styles.contentLink}
             >
