@@ -36,8 +36,12 @@ const irregularParticiples = {
   apprendre: "appris",
   comprendre: "compris",
   mettre: "mis",
+  permettre: "permis",
+  promettre: "promis",
   ouvrir: "ouvert",
   offrir: "offert",
+  découvrir: "découvert",
+  couvrir: "couvert",
   mourir: "mort",
   naître: "né",
   venir: "venu",
@@ -48,20 +52,38 @@ const irregularParticiples = {
   croire: "cru",
   vivre: "vécu",
   courir: "couru",
+  connaître: "connu",
+  reconnaître: "reconnu",
+  conduire: "conduit",
+  construire: "construit",
+  traduire: "traduit",
 };
 
 const regularVerbs = new Set([
-  "aimer", "adorer", "aider", "arriver", "chanter", "chercher", "danser",
-  "demander", "donner", "écouter", "entrer", "fermer", "jouer", "laver",
-  "manger", "marcher", "monter", "parler", "passer", "penser", "porter",
-  "regarder", "rester", "retourner", "rentrer", "tomber", "travailler",
-  "trouver", "visiter", "voyager",
+  "acheter", "adorer", "aider", "aimer", "ajouter", "allumer", "apporter",
+  "appeler", "arrêter", "attraper", "avancer", "bavarder", "cacher",
+  "casser", "chanter", "chercher", "commencer", "compter", "continuer",
+  "couper", "crier", "danser", "demander", "dessiner", "détester",
+  "donner", "écouter", "embrasser", "emporter", "entrer", "envoyer",
+  "essayer", "étudier", "fermer", "gagner", "garder", "habiter",
+  "jouer", "laisser", "laver", "lever", "manger", "marcher", "monter",
+  "montrer", "oublier", "parler", "passer", "penser", "porter",
+  "préférer", "préparer", "présenter", "quitter", "raconter", "regarder",
+  "rentrer", "rester", "retourner", "rêver", "sauter", "tomber",
+  "tourner", "travailler", "trouver", "utiliser", "visiter", "voyager",
 
-  "choisir", "finir", "grandir", "grossir", "maigrir", "obéir", "punir",
-  "réfléchir", "remplir", "réussir", "rougir",
+  "choisir", "finir", "grandir", "grossir", "guérir", "maigrir",
+  "obéir", "punir", "réfléchir", "remplir", "réussir", "rougir",
+  "vieillir",
 
   "attendre", "descendre", "entendre", "perdre", "répondre", "rendre",
   "vendre",
+
+  // common pronominal base verbs
+  "amuser", "appeler", "arrêter", "asseoir", "baigner", "brosser",
+  "coucher", "dépêcher", "doucher", "ennuyer", "fâcher", "habiller",
+  "inquiéter", "lever", "maquiller", "méfier", "occuper", "peigner",
+  "promener", "reposer", "réveiller", "souvenir", "tromper",
 ]);
 
 const knownVerbs = new Set([
@@ -71,7 +93,7 @@ const knownVerbs = new Set([
 ]);
 
 function normalizeVerb(v) {
-  return v.trim().toLowerCase().replace(/\s+/g, " ");
+  return v.trim().toLowerCase().replace(/\s+/g, " ").replace(/’/g, "'");
 }
 
 function beginsWithVowelOrH(word) {
@@ -79,12 +101,11 @@ function beginsWithVowelOrH(word) {
 }
 
 function isPronominalVerb(verb) {
-  return verb.startsWith("se ") || verb.startsWith("s’") || verb.startsWith("s'");
+  return verb.startsWith("se ") || verb.startsWith("s'");
 }
 
 function removeReflexivePart(verb) {
   if (verb.startsWith("se ")) return verb.slice(3);
-  if (verb.startsWith("s’")) return verb.slice(2);
   if (verb.startsWith("s'")) return verb.slice(2);
   return verb;
 }
@@ -100,10 +121,7 @@ function getReflexivePronoun(pronoun, nextWord) {
 }
 
 function joinReflexiveAndAuxiliary(reflexivePronoun, auxiliaryForm) {
-  if (reflexivePronoun.endsWith("’")) {
-    return `${reflexivePronoun}${auxiliaryForm}`;
-  }
-
+  if (reflexivePronoun.endsWith("’")) return `${reflexivePronoun}${auxiliaryForm}`;
   return `${reflexivePronoun} ${auxiliaryForm}`;
 }
 
@@ -125,10 +143,7 @@ function agree(participle, pronoun, auxiliary) {
 }
 
 function elide(subject, auxiliary) {
-  if (subject === "je" && beginsWithVowelOrH(auxiliary)) {
-    return `j’${auxiliary}`;
-  }
-
+  if (subject === "je" && beginsWithVowelOrH(auxiliary)) return `j’${auxiliary}`;
   return `${subject} ${auxiliary}`;
 }
 
@@ -140,6 +155,7 @@ export default function PasseComposeMachine() {
 
   const result = useMemo(() => {
     const verb = normalizeVerb(verbInput);
+    const displayVerb = verb.replace(/'/g, "’");
     const pronoun = pronouns.find((p) => p.key === pronounKey);
     const subject = pronoun.label.split(" ")[0];
 
@@ -149,7 +165,7 @@ export default function PasseComposeMachine() {
 
     if (!verb || !isKnownVerb) {
       return {
-        verb,
+        verb: displayVerb,
         baseVerb,
         subject,
         isPronominal,
@@ -159,7 +175,7 @@ export default function PasseComposeMachine() {
         expectedAuxInput: "???",
         rawParticiple: "???",
         finalParticiple: "???",
-        sentence: `Verbe non reconnu : « ${verb || "..."} »`,
+        sentence: `Verbe non reconnu : « ${displayVerb || "..."} »`,
       };
     }
 
@@ -184,7 +200,7 @@ export default function PasseComposeMachine() {
     const sentence = `${firstPart} ${finalParticiple}`;
 
     return {
-      verb,
+      verb: displayVerb,
       baseVerb,
       subject,
       isPronominal,
@@ -321,8 +337,8 @@ export default function PasseComposeMachine() {
             <h2 className="errorText">{result.sentence}</h2>
             <div className="steps">
               <p>
-                Vérifie l’orthographe du verbe. Par exemple, on écrit{" "}
-                <strong>travailler</strong> avec deux <strong>l</strong>.
+                Vérifie l’orthographe du verbe. Exemple : on écrit{" "}
+                <strong>travailler</strong>, pas <strong>travailer</strong>.
               </p>
             </div>
           </>
