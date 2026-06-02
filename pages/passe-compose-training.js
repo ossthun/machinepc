@@ -72,6 +72,10 @@ function normalizeVerb(v) {
   return v.trim().toLowerCase();
 }
 
+function beginsWithVowelOrH(word) {
+  return /^[aeiouéèêëàâîïôùûüh]/i.test(word);
+}
+
 function getPastParticiple(verb) {
   if (irregularParticiples[verb]) return irregularParticiples[verb];
   if (verb.endsWith("er")) return verb.slice(0, -2) + "é";
@@ -100,6 +104,13 @@ function cleanSubject(label) {
   return label.split(" ")[0];
 }
 
+function displaySubject(subject, verb) {
+  if (subject === "je" && beginsWithVowelOrH(verb)) {
+    return "j’";
+  }
+  return subject;
+}
+
 export default function PasseComposeTraining() {
   const [verbInput, setVerbInput] = useState("manger");
   const [pronounKey, setPronounKey] = useState("je");
@@ -118,7 +129,9 @@ export default function PasseComposeTraining() {
     const finalParticiple = agree(rawParticiple, pronoun, auxiliary);
 
     const subject = cleanSubject(pronoun.label);
+    const visibleSubject = displaySubject(subject, verb);
     const firstPart = elide(subject, auxiliaryForm);
+
     const sentence =
       rawParticiple === "?" ? "Verbe inconnu" : `${firstPart} ${finalParticiple}`;
 
@@ -131,6 +144,7 @@ export default function PasseComposeTraining() {
       finalParticiple,
       sentence,
       subject,
+      visibleSubject,
     };
   }, [verbInput, pronounKey]);
 
@@ -198,7 +212,7 @@ export default function PasseComposeTraining() {
 
       <section className="taskCard">
         <div className="sentenceBuild">
-          <span className="subject">{result.subject}</span>
+          <span className="subject">{result.visibleSubject}</span>
           <span className={`blank ${checked && auxCorrect ? "filled" : ""}`}>
             {checked && auxCorrect ? result.auxiliaryForm : "auxiliaire ?"}
           </span>
@@ -243,7 +257,7 @@ export default function PasseComposeTraining() {
 
             {checked && !auxCorrect && (
               <div className="feedback badText">
-                Pas encore. Avec <strong>{result.subject}</strong>, il faut écrire{" "}
+                Pas encore. Avec <strong>{result.visibleSubject}</strong>, il faut écrire{" "}
                 <strong>{result.auxiliaryForm}</strong>.
               </div>
             )}
@@ -312,7 +326,7 @@ export default function PasseComposeTraining() {
               </p>
               <p>
                 <strong>Étape 2:</strong> Conjugue cet auxiliaire au présent avec{" "}
-                <strong>{result.subject}</strong>.
+                <strong>{result.visibleSubject}</strong>.
               </p>
               <p>
                 <strong>Étape 3:</strong> Forme le participe passé:{" "}
@@ -623,7 +637,6 @@ export default function PasseComposeTraining() {
           max-width: 900px;
           margin: 34px auto 0;
           padding-top: 22px;
-          border-top: 1px solid rgba(100, 116, 139, 0.3);
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
