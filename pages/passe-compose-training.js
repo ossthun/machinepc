@@ -68,7 +68,7 @@ function normalize(text) {
   return text
     .trim()
     .toLowerCase()
-    .replace("’", "'")
+    .replace(/’/g, "'")
     .replace(/\s+/g, " ");
 }
 
@@ -99,6 +99,14 @@ function getReflexivePronoun(pronoun, nextWord) {
   }
 
   return reflexive;
+}
+
+function joinReflexiveAndAuxiliary(reflexivePronoun, auxiliaryForm) {
+  if (reflexivePronoun.endsWith("’")) {
+    return `${reflexivePronoun}${auxiliaryForm}`;
+  }
+
+  return `${reflexivePronoun} ${auxiliaryForm}`;
 }
 
 function getPastParticiple(verb) {
@@ -159,6 +167,10 @@ export default function PasseComposeTraining() {
       ? getReflexivePronoun(pronoun, auxiliaryForm)
       : "";
 
+    const expectedAuxInput = isPronominal
+      ? joinReflexiveAndAuxiliary(reflexivePronoun, auxiliaryForm)
+      : auxiliaryForm;
+
     const rawParticiple = getPastParticiple(baseVerb);
     const finalParticiple = agree(rawParticiple, pronoun, auxiliary);
 
@@ -166,12 +178,8 @@ export default function PasseComposeTraining() {
       ? subject
       : displaySubject(subject, auxiliaryForm);
 
-    const expectedAuxInput = isPronominal
-      ? `${reflexivePronoun} ${auxiliaryForm}`
-      : auxiliaryForm;
-
     const firstPart = isPronominal
-      ? `${subject} ${reflexivePronoun} ${auxiliaryForm}`
+      ? `${subject} ${expectedAuxInput}`
       : elide(subject, auxiliaryForm);
 
     const sentence =
@@ -305,7 +313,7 @@ export default function PasseComposeTraining() {
                   document.getElementById("participleInput")?.focus();
                 }
               }}
-              placeholder={result.isPronominal ? "ex: me suis" : "auxiliaire"}
+              placeholder={result.isPronominal ? "ex: s’est" : "auxiliaire"}
             />
 
             {checked && auxCorrect && (
