@@ -2,22 +2,116 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 
 const pronouns = [
-  { key: "je", label: "je", avoir: "ai", etre: "suis", gender: "m", plural: false },
-  { key: "tu", label: "tu", avoir: "as", etre: "es", gender: "m", plural: false },
-  { key: "il", label: "il", avoir: "a", etre: "est", gender: "m", plural: false },
-  { key: "elle", label: "elle", avoir: "a", etre: "est", gender: "f", plural: false },
-  { key: "nous_m", label: "nous masculin", avoir: "avons", etre: "sommes", gender: "m", plural: true },
-  { key: "nous_f", label: "nous féminin", avoir: "avons", etre: "sommes", gender: "f", plural: true },
-  { key: "vous_m", label: "vous masculin", avoir: "avez", etre: "êtes", gender: "m", plural: true },
-  { key: "vous_f", label: "vous féminin", avoir: "avez", etre: "êtes", gender: "f", plural: true },
-  { key: "ils", label: "ils", avoir: "ont", etre: "sont", gender: "m", plural: true },
-  { key: "elles", label: "elles", avoir: "ont", etre: "sont", gender: "f", plural: true },
+  {
+    key: "je",
+    label: "je",
+    avoir: "ai",
+    etre: "suis",
+    reflexive: "me",
+    gender: "m",
+    plural: false,
+  },
+  {
+    key: "tu",
+    label: "tu",
+    avoir: "as",
+    etre: "es",
+    reflexive: "te",
+    gender: "m",
+    plural: false,
+  },
+  {
+    key: "il",
+    label: "il",
+    avoir: "a",
+    etre: "est",
+    reflexive: "se",
+    gender: "m",
+    plural: false,
+  },
+  {
+    key: "elle",
+    label: "elle",
+    avoir: "a",
+    etre: "est",
+    reflexive: "se",
+    gender: "f",
+    plural: false,
+  },
+  {
+    key: "nous_m",
+    label: "nous masculin",
+    avoir: "avons",
+    etre: "sommes",
+    reflexive: "nous",
+    gender: "m",
+    plural: true,
+  },
+  {
+    key: "nous_f",
+    label: "nous féminin",
+    avoir: "avons",
+    etre: "sommes",
+    reflexive: "nous",
+    gender: "f",
+    plural: true,
+  },
+  {
+    key: "vous_m",
+    label: "vous masculin",
+    avoir: "avez",
+    etre: "êtes",
+    reflexive: "vous",
+    gender: "m",
+    plural: true,
+  },
+  {
+    key: "vous_f",
+    label: "vous féminin",
+    avoir: "avez",
+    etre: "êtes",
+    reflexive: "vous",
+    gender: "f",
+    plural: true,
+  },
+  {
+    key: "ils",
+    label: "ils",
+    avoir: "ont",
+    etre: "sont",
+    reflexive: "se",
+    gender: "m",
+    plural: true,
+  },
+  {
+    key: "elles",
+    label: "elles",
+    avoir: "ont",
+    etre: "sont",
+    reflexive: "se",
+    gender: "f",
+    plural: true,
+  },
 ];
 
 const etreVerbs = new Set([
-  "aller", "venir", "arriver", "partir", "entrer", "sortir", "monter",
-  "descendre", "naître", "mourir", "rester", "tomber", "retourner",
-  "passer", "devenir", "revenir", "rentrer",
+  "aller",
+  "venir",
+  "arriver",
+  "partir",
+  "entrer",
+  "sortir",
+  "monter",
+  "descendre",
+  "naître",
+  "mourir",
+  "rester",
+  "tomber",
+  "retourner",
+  "passer",
+  "devenir",
+  "revenir",
+  "rentrer",
 ]);
 
 const irregularParticiples = {
@@ -51,7 +145,32 @@ const irregularParticiples = {
 };
 
 function normalizeVerb(v) {
-  return v.trim().toLowerCase();
+  return v.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function isPronominalVerb(verb) {
+  return verb.startsWith("se ") || verb.startsWith("s’") || verb.startsWith("s'");
+}
+
+function removeReflexivePart(verb) {
+  if (verb.startsWith("se ")) return verb.slice(3);
+  if (verb.startsWith("s’")) return verb.slice(2);
+  if (verb.startsWith("s'")) return verb.slice(2);
+  return verb;
+}
+
+function beginsWithVowelOrSilentH(word) {
+  return /^[aeiouéèêëàâîïôùûüh]/i.test(word);
+}
+
+function getReflexivePronoun(pronoun, baseVerb) {
+  const reflexive = pronoun.reflexive;
+
+  if (["me", "te", "se"].includes(reflexive) && beginsWithVowelOrSilentH(baseVerb)) {
+    return reflexive[0] + "’";
+  }
+
+  return reflexive;
 }
 
 function getPastParticiple(verb) {
@@ -86,22 +205,34 @@ export default function PasseComposeMachine() {
   const result = useMemo(() => {
     const verb = normalizeVerb(verbInput);
     const pronoun = pronouns.find((p) => p.key === pronounKey);
+    const subject = pronoun.label.split(" ")[0];
 
-    const auxiliary = etreVerbs.has(verb) ? "être" : "avoir";
+    const isPronominal = isPronominalVerb(verb);
+    const baseVerb = removeReflexivePart(verb);
+
+    const auxiliary = isPronominal || etreVerbs.has(baseVerb) ? "être" : "avoir";
     const auxiliaryForm = auxiliary === "être" ? pronoun.etre : pronoun.avoir;
 
-    const rawParticiple = getPastParticiple(verb);
+    const rawParticiple = getPastParticiple(baseVerb);
     const finalParticiple = agree(rawParticiple, pronoun, auxiliary);
 
-    const cleanSubject = pronoun.label.split(" ")[0];
-    const firstPart = elide(cleanSubject, auxiliaryForm);
+    let firstPart;
+
+    if (isPronominal) {
+      const reflexivePronoun = getReflexivePronoun(pronoun, baseVerb);
+      firstPart = `${subject} ${reflexivePronoun} ${auxiliaryForm}`;
+    } else {
+      firstPart = elide(subject, auxiliaryForm);
+    }
 
     const sentence =
       rawParticiple === "?" ? "Verbe inconnu" : `${firstPart} ${finalParticiple}`;
 
     return {
       verb,
-      pronoun,
+      baseVerb,
+      subject,
+      isPronominal,
       auxiliary,
       auxiliaryForm,
       rawParticiple,
@@ -153,7 +284,11 @@ export default function PasseComposeMachine() {
 
         <label>
           <span>Verbe à l’infinitif</span>
-          <input value={verbInput} onChange={(e) => setVerbInput(e.target.value)} />
+          <input
+            value={verbInput}
+            onChange={(e) => setVerbInput(e.target.value)}
+            placeholder="manger, aller, se promener..."
+          />
         </label>
 
         <button onClick={startMachine}>⚙️ Démarrer</button>
@@ -209,18 +344,26 @@ export default function PasseComposeMachine() {
 
             <div className="steps">
               <p>
-                1. Auxiliaire: <strong>{result.auxiliary}</strong>
+                1. Verbe de base: <strong>{result.baseVerb}</strong>
               </p>
               <p>
-                2. Forme conjuguée: <strong>{result.auxiliaryForm}</strong>
+                2. Auxiliaire: <strong>{result.auxiliary}</strong>
               </p>
               <p>
-                3. Participe passé: <strong>{result.rawParticiple}</strong>
+                3. Forme conjuguée: <strong>{result.auxiliaryForm}</strong>
               </p>
+              <p>
+                4. Participe passé: <strong>{result.rawParticiple}</strong>
+              </p>
+              {result.isPronominal && (
+                <p>
+                  5. Verbe pronominal: on garde le pronom réfléchi et on utilise{" "}
+                  <strong>être</strong>.
+                </p>
+              )}
               {result.auxiliary === "être" && (
                 <p>
-                  4. Accord avec le sujet:{" "}
-                  <strong>{result.finalParticiple}</strong>
+                  Accord avec le sujet: <strong>{result.finalParticiple}</strong>
                 </p>
               )}
             </div>
@@ -577,7 +720,6 @@ export default function PasseComposeMachine() {
           max-width: 900px;
           margin: 34px auto 0;
           padding-top: 22px;
-          border-top: 1px solid rgba(100, 116, 139, 0.3);
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
