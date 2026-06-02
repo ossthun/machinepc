@@ -15,23 +15,9 @@ const pronouns = [
 ];
 
 const etreVerbs = new Set([
-  "aller",
-  "venir",
-  "arriver",
-  "partir",
-  "entrer",
-  "sortir",
-  "monter",
-  "descendre",
-  "naître",
-  "mourir",
-  "rester",
-  "tomber",
-  "retourner",
-  "passer",
-  "devenir",
-  "revenir",
-  "rentrer",
+  "aller", "venir", "arriver", "partir", "entrer", "sortir", "monter",
+  "descendre", "naître", "mourir", "rester", "tomber", "retourner",
+  "passer", "devenir", "revenir", "rentrer",
 ]);
 
 const irregularParticiples = {
@@ -164,12 +150,10 @@ export default function PasseComposeMachine() {
     return {
       verb,
       baseVerb,
-      pronoun,
       subject,
       isPronominal,
       auxiliary,
       auxiliaryForm,
-      reflexivePronoun,
       expectedAuxInput,
       rawParticiple,
       finalParticiple,
@@ -214,8 +198,8 @@ export default function PasseComposeMachine() {
         <h1>La machine à fabriquer le passé composé</h1>
 
         <p>
-          Le verbe avance sur le tapis roulant. Les machines ajoutent
-          l’auxiliaire et le participe passé.
+          Choisis un pronom, écris un verbe, puis appuie sur{" "}
+          <strong>Entrée</strong>.
         </p>
 
         <Link href="/" className="backLink">
@@ -240,11 +224,15 @@ export default function PasseComposeMachine() {
           <input
             value={verbInput}
             onChange={handleVerbChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                startMachine();
+              }
+            }}
             placeholder="manger, aller, se promener..."
           />
         </label>
-
-        <button onClick={startMachine}>⚙️ Démarrer</button>
       </section>
 
       <section className="factory">
@@ -289,7 +277,7 @@ export default function PasseComposeMachine() {
 
       <section className={`result ${showFinal ? "show" : ""}`}>
         {!showFinal ? (
-          <h2>La machine travaille...</h2>
+          <h2>La machine attend ton verbe...</h2>
         ) : (
           <>
             <div className="stamp">Résultat</div>
@@ -389,7 +377,7 @@ export default function PasseComposeMachine() {
         }
 
         .panel {
-          max-width: 900px;
+          max-width: 720px;
           margin: 0 auto 32px;
           background: rgba(255, 255, 255, 0.82);
           border: 2px solid white;
@@ -398,7 +386,7 @@ export default function PasseComposeMachine() {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          align-items: flex-end;
+          align-items: stretch;
           gap: 16px;
           box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
           backdrop-filter: blur(10px);
@@ -418,36 +406,15 @@ export default function PasseComposeMachine() {
         }
 
         select,
-        input,
-        button {
+        input {
           height: 56px;
           box-sizing: border-box;
           border-radius: 16px;
           font-size: 1rem;
-        }
-
-        select,
-        input {
           width: 100%;
           padding: 0 16px;
           border: 2px solid #cbd5e1;
           background: white;
-        }
-
-        button {
-          min-width: 220px;
-          padding: 0 24px;
-          border: 0;
-          background: linear-gradient(135deg, #2563eb, #7c3aed);
-          color: white;
-          font-weight: 950;
-          cursor: pointer;
-          box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
-          transition: transform 0.15s ease;
-        }
-
-        button:hover {
-          transform: translateY(-2px);
         }
 
         .factory {
@@ -785,10 +752,6 @@ export default function PasseComposeMachine() {
 
           .panel {
             align-items: stretch;
-          }
-
-          button {
-            width: 100%;
           }
         }
       `}</style>
