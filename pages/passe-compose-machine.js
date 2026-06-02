@@ -81,7 +81,6 @@ const irregularParticiples = {
   débattre: "débattu",
   abattre: "abattu",
   vaincre: "vaincu",
-  s'asseoir: "assis",
   asseoir: "assis",
 };
 
