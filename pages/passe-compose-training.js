@@ -105,7 +105,7 @@ function cleanSubject(label) {
 }
 
 function displaySubject(subject, verb) {
-  if (subject === "je" && beginsWithVowelOrH(verb)) {
+  if (subject === "je" && beginsWithVowelOrH(auxiliaryForm)) {
     return "j’";
   }
   return subject;
@@ -129,7 +129,7 @@ export default function PasseComposeTraining() {
     const finalParticiple = agree(rawParticiple, pronoun, auxiliary);
 
     const subject = cleanSubject(pronoun.label);
-    const visibleSubject = displaySubject(subject, verb);
+    const visibleSubject = displaySubject(subject, auxiliaryForm);
     const firstPart = elide(subject, auxiliaryForm);
 
     const sentence =
