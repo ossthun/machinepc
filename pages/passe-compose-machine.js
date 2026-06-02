@@ -15,9 +15,9 @@ const pronouns = [
 ];
 
 const etreVerbs = new Set([
-  "aller", "venir", "arriver", "partir", "entrer", "sortir", "monter",
-  "descendre", "naître", "mourir", "rester", "tomber", "retourner",
-  "passer", "devenir", "revenir", "rentrer",
+  "aller", "arriver", "devenir", "entrer", "monter", "mourir", "naître",
+  "partir", "passer", "rentrer", "rester", "retomber", "retourner",
+  "revenir", "sortir", "tomber", "venir", "descendre",
 ]);
 
 const irregularParticiples = {
@@ -26,8 +26,11 @@ const irregularParticiples = {
   faire: "fait",
   dire: "dit",
   écrire: "écrit",
+  décrire: "décrit",
+  inscrire: "inscrit",
   lire: "lu",
   voir: "vu",
+  revoir: "revu",
   pouvoir: "pu",
   vouloir: "voulu",
   devoir: "dû",
@@ -35,13 +38,16 @@ const irregularParticiples = {
   prendre: "pris",
   apprendre: "appris",
   comprendre: "compris",
+  surprendre: "surpris",
   mettre: "mis",
   permettre: "permis",
   promettre: "promis",
+  transmettre: "transmis",
   ouvrir: "ouvert",
   offrir: "offert",
   découvrir: "découvert",
   couvrir: "couvert",
+  souffrir: "souffert",
   mourir: "mort",
   naître: "né",
   venir: "venu",
@@ -54,42 +60,77 @@ const irregularParticiples = {
   courir: "couru",
   connaître: "connu",
   reconnaître: "reconnu",
+  paraître: "paru",
+  apparaître: "apparu",
+  disparaître: "disparu",
   conduire: "conduit",
   construire: "construit",
+  produire: "produit",
   traduire: "traduit",
+  cuire: "cuit",
+  suivre: "suivi",
+  poursuivre: "poursuivi",
+  rire: "ri",
+  sourire: "souri",
+  plaire: "plu",
+  pleuvoir: "plu",
+  falloir: "fallu",
+  valoir: "valu",
+  battre: "battu",
+  combattre: "combattu",
+  débattre: "débattu",
+  abattre: "abattu",
+  vaincre: "vaincu",
+  s'asseoir: "assis",
+  asseoir: "assis",
 };
 
-const regularVerbs = new Set([
-  "acheter", "adorer", "aider", "aimer", "ajouter", "allumer", "apporter",
-  "appeler", "arrêter", "attraper", "avancer", "bavarder", "cacher",
-  "casser", "chanter", "chercher", "commencer", "compter", "continuer",
-  "couper", "crier", "danser", "demander", "dessiner", "détester",
-  "donner", "écouter", "embrasser", "emporter", "entrer", "envoyer",
-  "essayer", "étudier", "fermer", "gagner", "garder", "habiter",
-  "jouer", "laisser", "laver", "lever", "manger", "marcher", "monter",
-  "montrer", "oublier", "parler", "passer", "penser", "porter",
-  "préférer", "préparer", "présenter", "quitter", "raconter", "regarder",
-  "rentrer", "rester", "retourner", "rêver", "sauter", "tomber",
-  "tourner", "travailler", "trouver", "utiliser", "visiter", "voyager",
-
-  "choisir", "finir", "grandir", "grossir", "guérir", "maigrir",
-  "obéir", "punir", "réfléchir", "remplir", "réussir", "rougir",
-  "vieillir",
-
-  "attendre", "descendre", "entendre", "perdre", "répondre", "rendre",
-  "vendre",
-
-  // common pronominal base verbs
-  "amuser", "appeler", "arrêter", "asseoir", "baigner", "brosser",
-  "coucher", "dépêcher", "doucher", "ennuyer", "fâcher", "habiller",
-  "inquiéter", "lever", "maquiller", "méfier", "occuper", "peigner",
-  "promener", "reposer", "réveiller", "souvenir", "tromper",
+const erVerbs = new Set([
+  "accepter", "accompagner", "acheter", "adorer", "aider", "aimer", "ajouter",
+  "allumer", "amener", "apporter", "appeler", "apprécier", "arrêter",
+  "attraper", "avancer", "bavarder", "briller", "cacher", "casser", "changer",
+  "chanter", "chercher", "commencer", "compter", "continuer", "copier",
+  "corriger", "couper", "crier", "danser", "demander", "dépenser", "dessiner",
+  "détester", "donner", "écouter", "embrasser", "emmener", "emporter",
+  "enlever", "entrer", "envoyer", "essayer", "étudier", "expliquer",
+  "fermer", "gagner", "garder", "goûter", "habiter", "imaginer", "inviter",
+  "jeter", "jouer", "laisser", "laver", "lever", "manger", "manquer",
+  "marcher", "monter", "montrer", "nager", "oublier", "parler", "partager",
+  "passer", "penser", "pleurer", "porter", "poser", "préférer", "préparer",
+  "présenter", "prêter", "quitter", "raconter", "ramasser", "ranger",
+  "regarder", "remarquer", "rencontrer", "rentrer", "rester", "retourner",
+  "rêver", "sauter", "téléphoner", "tomber", "toucher", "tourner",
+  "travailler", "trouver", "utiliser", "visiter", "voyager",
 ]);
 
+const irVerbs = new Set([
+  "agir", "applaudir", "bâtir", "choisir", "finir", "grandir", "grossir",
+  "guérir", "maigrir", "mincir", "nourrir", "obéir", "punir", "réfléchir",
+  "remplir", "réussir", "rougir", "salir", "vieillir",
+]);
+
+const reVerbs = new Set([
+  "attendre", "confondre", "défendre", "descendre", "entendre", "fondre",
+  "perdre", "prétendre", "répondre", "rendre", "vendre",
+]);
+
+const pronominalBaseVerbs = new Set([
+  "amuser", "appeler", "arrêter", "asseoir", "battre", "baigner", "brosser",
+  "cacher", "calmer", "changer", "coiffer", "coucher", "débrouiller",
+  "décider", "défendre", "déguiser", "dépêcher", "doucher", "ennuyer",
+  "entraîner", "fâcher", "habiller", "imaginer", "inquiéter", "installer",
+  "intéresser", "laver", "lever", "maquiller", "marier", "méfier", "moquer",
+  "occuper", "peigner", "perdre", "préparer", "promener", "rappeler",
+  "raser", "reposer", "réveiller", "souvenir", "taire", "tromper",
+];
+
 const knownVerbs = new Set([
-  ...regularVerbs,
   ...etreVerbs,
-  ...Object.keys(irregularParticiples),
+  ...erVerbs,
+  ...irVerbs,
+  ...reVerbs,
+  ...pronominalBaseVerbs,
+  ...Object.keys(irregularParticiples).map((v) => v.replace(/^s'/, "")),
 ]);
 
 function normalizeVerb(v) {
@@ -197,8 +238,6 @@ export default function PasseComposeMachine() {
       ? `${subject} ${expectedAuxInput}`
       : elide(subject, auxiliaryForm);
 
-    const sentence = `${firstPart} ${finalParticiple}`;
-
     return {
       verb: displayVerb,
       baseVerb,
@@ -210,7 +249,7 @@ export default function PasseComposeMachine() {
       expectedAuxInput,
       rawParticiple,
       finalParticiple,
-      sentence,
+      sentence: `${firstPart} ${finalParticiple}`,
     };
   }, [verbInput, pronounKey]);
 
@@ -348,23 +387,15 @@ export default function PasseComposeMachine() {
             <h2>{result.sentence}</h2>
 
             <div className="steps">
-              <p>
-                1. Verbe de base: <strong>{result.baseVerb}</strong>
-              </p>
-              <p>
-                2. Auxiliaire: <strong>{result.auxiliary}</strong>
-              </p>
+              <p>1. Verbe de base: <strong>{result.baseVerb}</strong></p>
+              <p>2. Auxiliaire: <strong>{result.auxiliary}</strong></p>
               <p>
                 3. Forme conjuguée:{" "}
                 <strong>
-                  {result.isPronominal
-                    ? result.expectedAuxInput
-                    : result.auxiliaryForm}
+                  {result.isPronominal ? result.expectedAuxInput : result.auxiliaryForm}
                 </strong>
               </p>
-              <p>
-                4. Participe passé: <strong>{result.rawParticiple}</strong>
-              </p>
+              <p>4. Participe passé: <strong>{result.rawParticiple}</strong></p>
               {result.isPronominal && (
                 <p>
                   5. Verbe pronominal: on garde le pronom réfléchi et on utilise{" "}
@@ -372,9 +403,7 @@ export default function PasseComposeMachine() {
                 </p>
               )}
               {result.auxiliary === "être" && (
-                <p>
-                  Accord avec le sujet: <strong>{result.finalParticiple}</strong>
-                </p>
+                <p>Accord avec le sujet: <strong>{result.finalParticiple}</strong></p>
               )}
             </div>
           </>
@@ -735,78 +764,40 @@ export default function PasseComposeMachine() {
         }
 
         @keyframes travel {
-          0% {
-            left: 24px;
-            transform: rotate(-2deg);
-          }
-          36% {
-            left: 34%;
-            transform: rotate(2deg);
-          }
-          68% {
-            left: 58%;
-            transform: rotate(-2deg);
-          }
-          100% {
-            left: calc(100% - 160px);
-            transform: rotate(0deg);
-          }
+          0% { left: 24px; transform: rotate(-2deg); }
+          36% { left: 34%; transform: rotate(2deg); }
+          68% { left: 58%; transform: rotate(-2deg); }
+          100% { left: calc(100% - 160px); transform: rotate(0deg); }
         }
 
         @keyframes beltMove {
-          from {
-            background-position: 0 0, 0 0;
-          }
-          to {
-            background-position: 0 0, -136px 0;
-          }
+          from { background-position: 0 0, 0 0; }
+          to { background-position: 0 0, -136px 0; }
         }
 
         @keyframes beltPaused {
-          from {
-            background-position: 0 0, 0 0;
-          }
-          to {
-            background-position: 0 0, 0 0;
-          }
+          from { background-position: 0 0, 0 0; }
+          to { background-position: 0 0, 0 0; }
         }
 
         @keyframes spin {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
 
         @keyframes pop {
-          from {
-            transform: scale(0.6);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
+          from { transform: scale(0.6); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
         }
 
         @keyframes resultPop {
-          from {
-            transform: translateY(20px) scale(0.95);
-          }
-          to {
-            transform: translateY(0) scale(1);
-          }
+          from { transform: translateY(20px) scale(0.95); }
+          to { transform: translateY(0) scale(1); }
         }
 
         @keyframes blink {
-          0%, 100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.35;
-          }
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.35; }
         }
 
         @media (max-width: 850px) {
