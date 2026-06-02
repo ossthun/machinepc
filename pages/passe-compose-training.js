@@ -15,9 +15,23 @@ const pronouns = [
 ];
 
 const etreVerbs = new Set([
-  "aller", "venir", "arriver", "partir", "entrer", "sortir", "monter",
-  "descendre", "naître", "mourir", "rester", "tomber", "retourner",
-  "passer", "devenir", "revenir", "rentrer",
+  "aller",
+  "venir",
+  "arriver",
+  "partir",
+  "entrer",
+  "sortir",
+  "monter",
+  "descendre",
+  "naître",
+  "mourir",
+  "rester",
+  "tomber",
+  "retourner",
+  "passer",
+  "devenir",
+  "revenir",
+  "rentrer",
 ]);
 
 const irregularParticiples = {
@@ -77,10 +91,10 @@ function removeReflexivePart(verb) {
   return verb;
 }
 
-function getReflexivePronoun(pronoun, baseVerb) {
+function getReflexivePronoun(pronoun, nextWord) {
   const reflexive = pronoun.reflexive;
 
-  if (["me", "te", "se"].includes(reflexive) && beginsWithVowelOrH(baseVerb)) {
+  if (["me", "te", "se"].includes(reflexive) && beginsWithVowelOrH(nextWord)) {
     return reflexive[0] + "’";
   }
 
@@ -142,7 +156,7 @@ export default function PasseComposeTraining() {
     const auxiliaryForm = auxiliary === "être" ? pronoun.etre : pronoun.avoir;
 
     const reflexivePronoun = isPronominal
-      ? getReflexivePronoun(pronoun, baseVerb)
+      ? getReflexivePronoun(pronoun, auxiliaryForm)
       : "";
 
     const rawParticiple = getPastParticiple(baseVerb);
