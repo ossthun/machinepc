@@ -50,6 +50,26 @@ const irregularParticiples = {
   courir: "couru",
 };
 
+const regularVerbs = new Set([
+  "aimer", "adorer", "aider", "arriver", "chanter", "chercher", "danser",
+  "demander", "donner", "écouter", "entrer", "fermer", "jouer", "laver",
+  "manger", "marcher", "monter", "parler", "passer", "penser", "porter",
+  "regarder", "rester", "retourner", "rentrer", "tomber", "travailler",
+  "trouver", "visiter", "voyager",
+
+  "choisir", "finir", "grandir", "grossir", "maigrir", "obéir", "punir",
+  "réfléchir", "remplir", "réussir", "rougir",
+
+  "attendre", "descendre", "entendre", "perdre", "répondre", "rendre",
+  "vendre",
+]);
+
+const knownVerbs = new Set([
+  ...regularVerbs,
+  ...etreVerbs,
+  ...Object.keys(irregularParticiples),
+]);
+
 function normalizeVerb(v) {
   return v.trim().toLowerCase().replace(/\s+/g, " ");
 }
@@ -125,6 +145,23 @@ export default function PasseComposeMachine() {
 
     const isPronominal = isPronominalVerb(verb);
     const baseVerb = removeReflexivePart(verb);
+    const isKnownVerb = knownVerbs.has(baseVerb);
+
+    if (!verb || !isKnownVerb) {
+      return {
+        verb,
+        baseVerb,
+        subject,
+        isPronominal,
+        isKnownVerb: false,
+        auxiliary: "???",
+        auxiliaryForm: "???",
+        expectedAuxInput: "???",
+        rawParticiple: "???",
+        finalParticiple: "???",
+        sentence: `Verbe non reconnu : « ${verb || "..."} »`,
+      };
+    }
 
     const auxiliary = isPronominal || etreVerbs.has(baseVerb) ? "être" : "avoir";
     const auxiliaryForm = auxiliary === "être" ? pronoun.etre : pronoun.avoir;
@@ -144,14 +181,14 @@ export default function PasseComposeMachine() {
       ? `${subject} ${expectedAuxInput}`
       : elide(subject, auxiliaryForm);
 
-    const sentence =
-      rawParticiple === "?" ? "Verbe inconnu" : `${firstPart} ${finalParticiple}`;
+    const sentence = `${firstPart} ${finalParticiple}`;
 
     return {
       verb,
       baseVerb,
       subject,
       isPronominal,
+      isKnownVerb: true,
       auxiliary,
       auxiliaryForm,
       expectedAuxInput,
@@ -278,6 +315,17 @@ export default function PasseComposeMachine() {
       <section className={`result ${showFinal ? "show" : ""}`}>
         {!showFinal ? (
           <h2>La machine attend ton verbe...</h2>
+        ) : !result.isKnownVerb ? (
+          <>
+            <div className="stamp error">Erreur</div>
+            <h2 className="errorText">{result.sentence}</h2>
+            <div className="steps">
+              <p>
+                Vérifie l’orthographe du verbe. Par exemple, on écrit{" "}
+                <strong>travailler</strong> avec deux <strong>l</strong>.
+              </p>
+            </div>
+          </>
         ) : (
           <>
             <div className="stamp">Résultat</div>
@@ -627,10 +675,18 @@ export default function PasseComposeMachine() {
           margin-bottom: 8px;
         }
 
+        .stamp.error {
+          background: #dc2626;
+        }
+
         .result h2 {
           margin: 0 0 18px;
           font-size: clamp(2rem, 6vw, 3.5rem);
           color: #1d4ed8;
+        }
+
+        .errorText {
+          color: #dc2626 !important;
         }
 
         .steps {
