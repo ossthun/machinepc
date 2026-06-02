@@ -380,8 +380,7 @@ export default function PasseComposeMachine() {
             <h2 className="errorText">{result.sentence}</h2>
             <div className="steps">
               <p>
-                Vérifie l’orthographe du verbe. Exemple : on écrit{" "}
-                <strong>travailler</strong>, pas <strong>travailer</strong>.
+                Vérifie l’orthographe du verbe.
               </p>
             </div>
           </>
