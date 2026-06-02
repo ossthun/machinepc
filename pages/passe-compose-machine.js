@@ -121,7 +121,7 @@ const pronominalBaseVerbs = new Set([
   "intéresser", "laver", "lever", "maquiller", "marier", "méfier", "moquer",
   "occuper", "peigner", "perdre", "préparer", "promener", "rappeler",
   "raser", "reposer", "réveiller", "souvenir", "taire", "tromper",
-];
+]);
 
 const knownVerbs = new Set([
   ...etreVerbs,
