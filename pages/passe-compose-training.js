@@ -152,8 +152,6 @@ export default function PasseComposeTraining() {
   const participleCorrect =
     normalize(participleInput) === normalize(result.finalParticiple);
 
-  const finished = checked && auxCorrect && participleCorrect;
-
   function resetExercise(newVerb = verbInput) {
     setVerbInput(newVerb);
     setAuxInput("");
@@ -353,19 +351,6 @@ export default function PasseComposeTraining() {
             </div>
           )}
         </div>
-
-        <section className={`final ${finished ? "show" : ""}`}>
-          {finished ? (
-            <>
-              <div className="stamp">Bravo!</div>
-              <h2>{result.sentence}</h2>
-            </>
-          ) : checked ? (
-            <h2>Corrige les champs rouges, puis appuie de nouveau sur Entrée.</h2>
-          ) : (
-            <h2>Complète les deux champs. La correction se fait avec Entrée.</h2>
-          )}
-        </section>
       </section>
 
       <footer className="footer">
@@ -612,38 +597,6 @@ export default function PasseComposeTraining() {
           line-height: 1.55;
         }
 
-        .final {
-          margin: 26px auto 0;
-          max-width: 780px;
-          text-align: center;
-          padding: 22px;
-          border-radius: 28px;
-          background: #f8fafc;
-          border: 2px solid #e2e8f0;
-        }
-
-        .final.show {
-          background: #ecfdf5;
-          border-color: #22c55e;
-          animation: pop 0.35s ease-out;
-        }
-
-        .stamp {
-          display: inline-block;
-          padding: 7px 15px;
-          border-radius: 999px;
-          background: #16a34a;
-          color: white;
-          font-weight: 950;
-          margin-bottom: 10px;
-        }
-
-        .final h2 {
-          margin: 0;
-          font-size: clamp(1.5rem, 5vw, 3rem);
-          color: #1d4ed8;
-        }
-
         .footer {
           max-width: 900px;
           margin: 34px auto 0;
@@ -663,17 +616,6 @@ export default function PasseComposeTraining() {
 
         .footerLink:hover {
           text-decoration: underline;
-        }
-
-        @keyframes pop {
-          from {
-            transform: scale(0.94);
-            opacity: 0.6;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
         }
 
         @media (max-width: 850px) {
