@@ -94,7 +94,7 @@ function agree(participle, pronoun, auxiliary) {
 }
 
 function elide(subject, auxiliary) {
-  if (subject === "je" && /^[aeiouéèê]/i.test(auxiliary)) {
+  if (subject === "je" && beginsWithVowelOrH(auxiliary)) {
     return `j’${auxiliary}`;
   }
   return `${subject} ${auxiliary}`;
@@ -104,7 +104,7 @@ function cleanSubject(label) {
   return label.split(" ")[0];
 }
 
-function displaySubject(subject, verb) {
+function displaySubject(subject, auxiliaryForm) {
   if (subject === "je" && beginsWithVowelOrH(auxiliaryForm)) {
     return "j’";
   }
@@ -171,7 +171,9 @@ export default function PasseComposeTraining() {
     <main className="page">
       <section className="hero">
         <div className="badge">Mode entraînement</div>
+
         <h1>Construis le passé composé toi-même</h1>
+
         <p>
           Écris l’auxiliaire, puis le participe passé. Appuie sur{" "}
           <strong>Entrée</strong> dans le deuxième champ pour vérifier.
@@ -213,9 +215,11 @@ export default function PasseComposeTraining() {
       <section className="taskCard">
         <div className="sentenceBuild">
           <span className="subject">{result.visibleSubject}</span>
+
           <span className={`blank ${checked && auxCorrect ? "filled" : ""}`}>
             {checked && auxCorrect ? result.auxiliaryForm : "auxiliaire ?"}
           </span>
+
           <span className={`blank ${checked && participleCorrect ? "filled" : ""}`}>
             {checked && participleCorrect
               ? result.finalParticiple
@@ -226,7 +230,9 @@ export default function PasseComposeTraining() {
         <div className="factoryLine">
           <div className={`station ${checked ? (auxCorrect ? "good" : "bad") : ""}`}>
             <div className="stationNumber">1</div>
+
             <h2>Machine auxiliaire</h2>
+
             <p>
               Écris la forme conjuguée de l’auxiliaire:
               <br />
@@ -269,7 +275,9 @@ export default function PasseComposeTraining() {
             }`}
           >
             <div className="stationNumber">2</div>
+
             <h2>Machine participe passé</h2>
+
             <p>
               Écris le participe passé complet, puis appuie sur{" "}
               <strong>Entrée</strong>.
@@ -324,15 +332,18 @@ export default function PasseComposeTraining() {
                 <strong>Étape 1:</strong> Demande-toi si le verbe utilise{" "}
                 <strong>avoir</strong> ou <strong>être</strong>.
               </p>
+
               <p>
                 <strong>Étape 2:</strong> Conjugue cet auxiliaire au présent avec{" "}
                 <strong>{result.visibleSubject}</strong>.
               </p>
+
               <p>
                 <strong>Étape 3:</strong> Forme le participe passé:{" "}
                 <strong>-er → é</strong>, <strong>-ir → i</strong>,{" "}
                 <strong>-re → u</strong>, sauf verbes irréguliers.
               </p>
+
               {result.auxiliary === "être" && (
                 <p>
                   <strong>Étape 4:</strong> Avec <strong>être</strong>, accorde le
