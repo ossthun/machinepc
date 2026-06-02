@@ -257,6 +257,11 @@ export default function PasseComposeMachine() {
   }
 
   function startMachine() {
+    if (!result.isKnownVerb) {
+      setPhase("done");
+      return;
+    }
+
     setPhase("idle");
     setRunId((previous) => previous + 1);
 
@@ -265,7 +270,7 @@ export default function PasseComposeMachine() {
     setTimeout(() => setPhase("participle"), 2340);
     setTimeout(() => setPhase("done"), 3840);
   }
-
+  
   function handleVerbChange(e) {
     setVerbInput(e.target.value);
     resetMachine();
