@@ -284,7 +284,7 @@ export default function PasseComposeMachine() {
   const showAux = ["auxiliary", "participle", "done"].includes(phase);
   const showParticiple = ["participle", "done"].includes(phase);
   const showFinal = phase === "done";
-  const isMoving = phase !== "idle";
+  const isMoving = result.isKnownVerb && ["running", "auxiliary", "participle"].includes(phase);
 
   return (
     <main className="page">
