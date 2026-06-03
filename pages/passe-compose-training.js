@@ -314,9 +314,11 @@ export default function PasseComposeTraining() {
   }, [verbInput, pronounKey]);
 
   const currentVerbWasSubmitted = submittedVerb === result.verb;
-  const machineUnlocked = result.isKnown;
+
+  const machineUnlocked = currentVerbWasSubmitted && result.isKnown;
+
   const showVerbError =
-    !result.isKnown && result.verb.trim().length > 0;
+    currentVerbWasSubmitted && !result.isKnown && result.verb.trim().length > 0;
   const auxCorrect =
     machineUnlocked && normalize(auxInput) === normalize(result.expectedAuxInput);
 
@@ -381,8 +383,11 @@ export default function PasseComposeTraining() {
           <select
             value={pronounKey}
             onChange={(e) => {
-              setPronounKey(e.target.value);
-              resetExercise();
+              setVerbInput(e.target.value);
+              setAuxInput("");
+              setParticipleInput("");
+              setChecked(false);
+              setShowHint(false);
             }}
           >
             {pronouns.map((p) => (
