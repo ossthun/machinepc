@@ -316,7 +316,7 @@ export default function PasseComposeTraining() {
   const currentVerbWasSubmitted = submittedVerb === result.verb;
   const machineUnlocked = result.isKnown;
   const showVerbError =
-  currentVerbWasSubmitted && !result.isKnown && result.verb;
+    !result.isKnown && result.verb.trim().length > 0;
   const auxCorrect =
     machineUnlocked && normalize(auxInput) === normalize(result.expectedAuxInput);
 
