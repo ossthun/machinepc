@@ -15,52 +15,40 @@ const pronouns = [
 ];
 
 const etreVerbs = new Set([
-  "aller",
-  "venir",
-  "arriver",
-  "partir",
-  "entrer",
-  "sortir",
-  "monter",
-  "descendre",
-  "naître",
-  "mourir",
-  "rester",
-  "tomber",
-  "retourner",
-  "passer",
-  "devenir",
-  "revenir",
-  "rentrer",
+  "aller", "arriver", "descendre", "devenir", "entrer", "monter", "mourir",
+  "naître", "partir", "passer", "rentrer", "rester", "retourner", "revenir",
+  "sortir", "tomber", "venir",
 ]);
 
 const regularErVerbs = [
-  "abandonner", "abaisser", "abîmer", "abonner", "aborder", "aboutir", "absorber",
-  "accepter", "accompagner", "accorder", "accrocher", "accuser", "acheter", "achever",
-  "adapter", "admirer", "adorer", "adresser", "afficher", "affirmer", "aider", "aimer",
-  "ajouter", "allumer", "améliorer", "amener", "annoncer", "apporter", "approcher",
-  "appuyer", "arracher", "arranger", "arrêter", "arriver", "arroser", "assurer",
-  "attaquer", "attraper", "augmenter", "avancer", "baisser", "balayer", "bavarder",
-  "blesser", "bouger", "briller", "brûler", "cacher", "calculer", "casser", "changer",
-  "chanter", "charger", "chercher", "coller", "commander", "commencer", "comparer",
-  "compléter", "compter", "conseiller", "conserver", "continuer", "contrôler", "copier",
-  "corriger", "coucher", "couper", "créer", "crier", "cuisiner", "danser", "décider",
-  "déclarer", "décorer", "découper", "demander", "dépenser", "déposer", "dessiner",
+  "abaisser", "abandonner", "abîmer", "abonner", "aborder", "abriter", "accepter",
+  "accompagner", "accorder", "accrocher", "accuser", "acheter", "achever", "adapter",
+  "admirer", "adorer", "adresser", "afficher", "affirmer", "aider", "aimer",
+  "ajouter", "allumer", "améliorer", "amener", "amuser", "annoncer", "appeler",
+  "apporter", "approcher", "appuyer", "arracher", "arranger", "arrêter", "arriver",
+  "arroser", "assurer", "attaquer", "attraper", "augmenter", "avancer", "baisser",
+  "balayer", "bavarder", "blesser", "bouger", "briller", "brûler", "cacher",
+  "calculer", "casser", "changer", "chanter", "charger", "chercher", "coller",
+  "commander", "commencer", "comparer", "compléter", "compter", "conseiller",
+  "conserver", "continuer", "contrôler", "copier", "corriger", "coucher", "couper",
+  "créer", "crier", "cuisiner", "danser", "décider", "déclarer", "décorer",
+  "découper", "démarrer", "demander", "déménager", "dépenser", "déposer", "dessiner",
   "détester", "deviner", "dîner", "diriger", "discuter", "donner", "douter", "durer",
   "écouter", "effacer", "embrasser", "emmener", "empêcher", "employer", "encourager",
-  "entrer", "envoyer", "essayer", "espérer", "étudier", "éviter", "expliquer", "fermer",
-  "fêter", "filmer", "foncer", "forcer", "frapper", "fumer", "gagner", "garder", "goûter",
-  "gratter", "grimper", "habiller", "habiter", "ignorer", "imaginer", "imprimer",
-  "inviter", "jeter", "jouer", "jurer", "laisser", "laver", "lever", "livrer", "louer",
-  "manger", "marcher", "marquer", "mélanger", "mener", "mériter", "monter", "montrer",
-  "nager", "nettoyer", "observer", "occuper", "oublier", "parler", "partager", "passer",
-  "payer", "penser", "pleurer", "porter", "poser", "pousser", "préférer", "préparer",
-  "présenter", "prier", "prouver", "quitter", "raconter", "rappeler", "recopier",
-  "regarder", "regretter", "remarquer", "remercier", "remonter", "rencontrer", "rentrer",
-  "réparer", "répéter", "reposer", "ressembler", "rester", "retourner", "rêver", "sauter",
-  "sauver", "signer", "sonner", "souhaiter", "terminer", "tirer", "tomber", "toucher",
-  "tourner", "travailler", "traverser", "trembler", "trouver", "utiliser", "visiter",
-  "voler", "voyager",
+  "entrer", "envoyer", "essayer", "espérer", "étudier", "éviter", "expliquer",
+  "fermer", "fêter", "filmer", "foncer", "forcer", "frapper", "fumer", "gagner",
+  "garder", "goûter", "gratter", "grimper", "habiller", "habiter", "ignorer",
+  "imaginer", "imprimer", "inviter", "jeter", "jouer", "jurer", "laisser", "laver",
+  "lever", "livrer", "louer", "manger", "maquiller", "marcher", "marquer", "mélanger",
+  "menacer", "mener", "mériter", "monter", "montrer", "nager", "nettoyer", "observer",
+  "occuper", "oublier", "parler", "partager", "passer", "payer", "penser", "pleurer",
+  "porter", "poser", "pousser", "préférer", "préparer", "présenter", "prier", "prouver",
+  "quitter", "raconter", "rappeler", "recopier", "regarder", "regretter", "remarquer",
+  "remercier", "remonter", "rencontrer", "rentrer", "réparer", "répéter", "reposer",
+  "ressembler", "rester", "retourner", "rêver", "sauter", "sauver", "signer", "sonner",
+  "souhaiter", "terminer", "tirer", "tomber", "toucher", "tourner", "travailler",
+  "traverser", "trébucher", "trembler", "trouver", "utiliser", "visiter", "voler",
+  "voyager",
 ];
 
 const regularIrVerbs = [
@@ -72,29 +60,28 @@ const regularIrVerbs = [
 ];
 
 const regularReVerbs = [
-  "attendre", "battre", "confondre", "construire", "correspondre", "coudre",
-  "craindre", "défendre", "descendre", "détendre", "entendre", "éteindre",
-  "fondre", "mordre", "perdre", "pondre", "prétendre", "rendre", "répandre",
-  "répondre", "rompre", "tendre", "tondre", "tordre", "vendre",
+  "attendre", "battre", "confondre", "correspondre", "coudre", "craindre",
+  "défendre", "descendre", "détendre", "entendre", "éteindre", "fondre", "mordre",
+  "perdre", "pondre", "prétendre", "rendre", "répandre", "répondre", "rompre",
+  "tendre", "tondre", "tordre", "vendre",
 ];
 
 const otherKnownVerbs = [
-  "aller", "avoir", "être", "faire", "dire", "écrire", "lire", "voir", "savoir",
-  "pouvoir", "vouloir", "devoir", "prendre", "apprendre", "comprendre", "reprendre",
-  "surprendre", "mettre", "permettre", "promettre", "ouvrir", "offrir", "souffrir",
-  "couvrir", "découvrir", "venir", "devenir", "revenir", "tenir", "retenir", "obtenir",
-  "partir", "sortir", "dormir", "servir", "sentir", "mentir", "courir", "mourir",
-  "naître", "recevoir", "apercevoir", "boire", "croire", "vivre", "suivre", "rire",
-  "plaire", "taire", "falloir", "pleuvoir", "asseoir",
+  "aller", "apercevoir", "apprendre", "asseoir", "avoir", "boire", "comprendre",
+  "construire", "courir", "couvrir", "croire", "devenir", "devoir", "découvrir",
+  "dire", "dormir", "écrire", "être", "faire", "falloir", "lire", "mentir", "mettre",
+  "mourir", "naître", "obtenir", "offrir", "ouvrir", "partir", "permettre", "plaire",
+  "pleuvoir", "pouvoir", "prendre", "promettre", "recevoir", "reprendre", "retenir",
+  "revenir", "rire", "savoir", "sentir", "servir", "sortir", "souffrir", "suivre",
+  "surprendre", "taire", "tenir", "venir", "vivre", "voir", "vouloir",
 ];
 
 const pronominalVerbs = [
   "s'amuser", "s'appeler", "s'arrêter", "s'asseoir", "s'énerver", "s'entraîner",
   "s'excuser", "s'habiller", "s'intéresser", "s'occuper",
-  "se cacher", "se calmer", "se coucher", "se dépêcher", "se disputer",
-  "se doucher", "se fâcher", "se laver", "se lever", "se maquiller",
-  "se peigner", "se préparer", "se promener", "se rappeler", "se reposer",
-  "se réveiller", "se souvenir", "se tromper",
+  "se cacher", "se calmer", "se coucher", "se dépêcher", "se disputer", "se doucher",
+  "se fâcher", "se laver", "se lever", "se maquiller", "se peigner", "se préparer",
+  "se promener", "se rappeler", "se reposer", "se réveiller", "se souvenir", "se tromper",
 ];
 
 const knownVerbs = new Set([
@@ -237,26 +224,32 @@ function displaySubject(subject, auxiliaryForm) {
   return subject;
 }
 
+function isVerbKnown(verb) {
+  if (!verb) return false;
+  if (isPronominalVerb(verb)) {
+    return knownPronominalVerbs.has(verb);
+  }
+  return knownVerbs.has(verb);
+}
 export default function PasseComposeTraining() {
-  const [verbInput, setVerbInput] = useState("manger");
+  const initialVerb = "manger";
+
+  const [verbInput, setVerbInput] = useState(initialVerb);
+  const [submittedVerb, setSubmittedVerb] = useState(initialVerb);
   const [pronounKey, setPronounKey] = useState("je");
   const [auxInput, setAuxInput] = useState("");
   const [participleInput, setParticipleInput] = useState("");
   const [checked, setChecked] = useState(false);
   const [showHint, setShowHint] = useState(false);
-  const [verbSubmitted, setVerbSubmitted] = useState(true);
 
   const result = useMemo(() => {
     const verb = normalizeVerb(verbInput);
-    const pronoun = pronouns.find((p) => p.key === pronounKey);
+    const pronoun = pronouns.find((p) => p.key === pronounKey) || pronouns[0];
 
     const subject = cleanSubject(pronoun.label);
     const isPronominal = isPronominalVerb(verb);
     const baseVerb = removeReflexivePart(verb);
-
-    const isKnown = isPronominal
-      ? knownPronominalVerbs.has(verb)
-      : knownVerbs.has(verb);
+    const isKnown = isVerbKnown(verb);
 
     if (!isKnown) {
       return {
@@ -320,25 +313,44 @@ export default function PasseComposeTraining() {
     };
   }, [verbInput, pronounKey]);
 
+  const currentVerbWasSubmitted = submittedVerb === result.verb;
+  const machineUnlocked = currentVerbWasSubmitted && result.isKnown;
+  const showVerbError = currentVerbWasSubmitted && !result.isKnown && result.verb;
+
   const auxCorrect =
-    result.isKnown && normalize(auxInput) === normalize(result.expectedAuxInput);
+    machineUnlocked && normalize(auxInput) === normalize(result.expectedAuxInput);
 
   const participleCorrect =
-    result.isKnown && normalize(participleInput) === normalize(result.finalParticiple);
-  const machineUnlocked = verbSubmitted && result.isKnown;
+    machineUnlocked && normalize(participleInput) === normalize(result.finalParticiple);
 
   function resetExercise(newVerb = verbInput) {
     setVerbInput(newVerb);
-    setVerbSubmitted(false);
     setAuxInput("");
     setParticipleInput("");
     setChecked(false);
     setShowHint(false);
   }
-  
+
+  function submitVerb() {
+    const submitted = normalizeVerb(verbInput);
+
+    setSubmittedVerb(submitted);
+    setChecked(false);
+    setShowHint(false);
+    setAuxInput("");
+    setParticipleInput("");
+
+    if (isVerbKnown(submitted)) {
+      setTimeout(() => {
+        document.getElementById("auxInput")?.focus();
+      }, 0);
+    }
+  }
+
   function verifyAll() {
-    if (!result.isKnown) {
-      setChecked(true);
+    if (!machineUnlocked) {
+      setSubmittedVerb(result.verb);
+      setChecked(false);
       return;
     }
 
@@ -354,8 +366,8 @@ export default function PasseComposeTraining() {
         <h1>Construis le passé composé toi-même</h1>
 
         <p>
-          Écris l’auxiliaire, puis le participe passé. Appuie sur{" "}
-          <strong>Entrée</strong> dans le deuxième champ pour vérifier.
+          Écris d’abord un infinitif, puis appuie sur <strong>Entrée</strong>.
+          Ensuite, écris l’auxiliaire et le participe passé.
         </p>
 
         <Link href="/" className="backLink">
@@ -385,24 +397,25 @@ export default function PasseComposeTraining() {
           <span>Verbe à l’infinitif</span>
           <input
             value={verbInput}
-            onChange={(e) => resetExercise(e.target.value)}
+            onChange={(e) => {
+              setVerbInput(e.target.value);
+              setAuxInput("");
+              setParticipleInput("");
+              setChecked(false);
+              setShowHint(false);
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-              e.preventDefault();
-              setVerbSubmitted(true);
-              setChecked(false);
-
-              if (result.isKnown) {
-                document.getElementById("auxInput")?.focus();
+                e.preventDefault();
+                submitVerb();
               }
-            }
-          }}
+            }}
             placeholder="manger, aller, se promener..."
           />
         </label>
       </section>
 
-      {verbSubmitted && !result.isKnown && result.verb && (
+      {showVerbError && (
         <section className="errorCard">
           <strong>Verbe inconnu ou mal orthographié.</strong>
           <br />
@@ -413,7 +426,7 @@ export default function PasseComposeTraining() {
         </section>
       )}
 
-      <section className={`taskCard ${verbSubmitted && !result.isKnown ? "disabledCard" : ""}`}>
+      <section className={`taskCard ${showVerbError ? "disabledCard" : ""}`}>
         <div className="sentenceBuild">
           <span className="subject">{result.visibleSubject}</span>
 
@@ -467,7 +480,7 @@ export default function PasseComposeTraining() {
               placeholder={result.isPronominal ? "ex: s’est" : "auxiliaire"}
             />
 
-            {checked && result.isKnown && auxCorrect && (
+            {checked && machineUnlocked && auxCorrect && (
               <div className="feedback goodText">
                 Correct!{" "}
                 {result.isPronominal ? (
@@ -484,14 +497,13 @@ export default function PasseComposeTraining() {
               </div>
             )}
 
-            {checked && result.isKnown && !auxCorrect && (
+            {checked && machineUnlocked && !auxCorrect && (
               <div className="feedback badText">
                 Pas encore. Avec <strong>{result.visibleSubject}</strong>, il faut écrire{" "}
                 <strong>{result.expectedAuxInput}</strong>.
               </div>
             )}
           </div>
-
           <div
             className={`station ${
               checked ? (participleCorrect ? "good" : "bad") : ""
@@ -529,14 +541,14 @@ export default function PasseComposeTraining() {
               placeholder="participe passé"
             />
 
-            {checked && result.isKnown && participleCorrect && (
+            {checked && machineUnlocked && participleCorrect && (
               <div className="feedback goodText">
                 Correct! Le participe passé final est{" "}
                 <strong>{result.finalParticiple}</strong>.
               </div>
             )}
 
-            {checked && result.isKnown && !participleCorrect && (
+            {checked && machineUnlocked && !participleCorrect && (
               <div className="feedback badText">
                 Pas encore. Le participe passé attendu est{" "}
                 <strong>{result.finalParticiple}</strong>.
@@ -554,13 +566,14 @@ export default function PasseComposeTraining() {
             💡 {showHint ? "Cacher l’aide" : "Afficher une aide"}
           </button>
 
-          {showHint && result.isKnown && (
+          {showHint && machineUnlocked && (
             <div className="hint">
               {result.isPronominal ? (
                 <>
                   <p>
                     <strong>Étape 1:</strong> C’est un verbe pronominal. On garde le
-                    pronom réfléchi: <strong>{result.reflexivePronoun}</strong>.
+                    pronom réfléchi:{" "}
+                    <strong>{result.reflexivePronoun}</strong>.
                   </p>
 
                   <p>
@@ -569,8 +582,9 @@ export default function PasseComposeTraining() {
                   </p>
 
                   <p>
-                    <strong>Étape 3:</strong> Avec <strong>{result.visibleSubject}</strong>,
-                    il faut écrire <strong>{result.expectedAuxInput}</strong>.
+                    <strong>Étape 3:</strong> Avec{" "}
+                    <strong>{result.visibleSubject}</strong>, il faut écrire{" "}
+                    <strong>{result.expectedAuxInput}</strong>.
                   </p>
 
                   <p>
@@ -593,14 +607,15 @@ export default function PasseComposeTraining() {
 
                   <p>
                     <strong>Étape 3:</strong> Forme le participe passé:{" "}
-                    <strong>-er → é</strong>, <strong>-ir → i</strong>,{" "}
+                    <strong>-er → é</strong>,{" "}
+                    <strong>-ir → i</strong>,{" "}
                     <strong>-re → u</strong>, sauf verbes irréguliers.
                   </p>
 
                   {result.auxiliary === "être" && (
                     <p>
-                      <strong>Étape 4:</strong> Avec <strong>être</strong>, accorde le
-                      participe passé avec le sujet.
+                      <strong>Étape 4:</strong> Avec{" "}
+                      <strong>être</strong>, accorde le participe passé avec le sujet.
                     </p>
                   )}
                 </>
@@ -611,11 +626,25 @@ export default function PasseComposeTraining() {
       </section>
 
       <footer className="footer">
-        <Link href="/about" className="footerLink">À propos</Link>
-        <Link href="/contact" className="footerLink">Contact</Link>
-        <Link href="/privacy" className="footerLink">Confidentialité</Link>
-        <Link href="/terms" className="footerLink">Conditions</Link>
-        <Link href="/disclaimer" className="footerLink">Avertissement</Link>
+        <Link href="/about" className="footerLink">
+          À propos
+        </Link>
+
+        <Link href="/contact" className="footerLink">
+          Contact
+        </Link>
+
+        <Link href="/privacy" className="footerLink">
+          Confidentialité
+        </Link>
+
+        <Link href="/terms" className="footerLink">
+          Conditions
+        </Link>
+
+        <Link href="/disclaimer" className="footerLink">
+          Avertissement
+        </Link>
       </footer>
 
       <style jsx>{`
@@ -724,7 +753,6 @@ export default function PasseComposeTraining() {
           border: 2px solid #cbd5e1;
           background: white;
         }
-
         input:disabled,
         button:disabled {
           opacity: 0.5;
