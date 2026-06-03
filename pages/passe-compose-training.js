@@ -241,6 +241,10 @@ export default function PasseComposeTraining() {
   const [participleInput, setParticipleInput] = useState("");
   const [checked, setChecked] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [verbStatus, setVerbStatus] = useState("valid");
+  // "editing" = user is typing
+  // "valid" = user pressed Enter and verb is known
+  // "invalid" = user pressed Enter and verb is unknown
 
   const result = useMemo(() => {
     const verb = normalizeVerb(verbInput);
@@ -315,10 +319,10 @@ export default function PasseComposeTraining() {
 
   const currentVerbWasSubmitted = submittedVerb === result.verb;
 
-  const machineUnlocked = currentVerbWasSubmitted && result.isKnown;
+  const machineUnlocked = verbStatus === "valid" && result.isKnown;
 
   const showVerbError =
-    currentVerbWasSubmitted && !result.isKnown && result.verb.trim().length > 0;
+    verbStatus === "invalid" && result.verb.trim().length > 0;
   const auxCorrect =
     machineUnlocked && normalize(auxInput) === normalize(result.expectedAuxInput);
 
@@ -335,20 +339,22 @@ export default function PasseComposeTraining() {
 
   function submitVerb() {
     const submitted = normalizeVerb(verbInput);
+    const known = isVerbKnown(submitted);
 
+    setVerbInput(submitted);
     setSubmittedVerb(submitted);
+    setVerbStatus(known ? "valid" : "invalid");
     setChecked(false);
     setShowHint(false);
     setAuxInput("");
     setParticipleInput("");
 
-    if (isVerbKnown(submitted)) {
+    if (known) {
       setTimeout(() => {
         document.getElementById("auxInput")?.focus();
       }, 0);
     }
   }
-
   function verifyAll() {
     if (!machineUnlocked) {
       setSubmittedVerb(result.verb);
@@ -384,6 +390,7 @@ export default function PasseComposeTraining() {
             value={pronounKey}
             onChange={(e) => {
               setVerbInput(e.target.value);
+              setVerbStatus("editing");
               setAuxInput("");
               setParticipleInput("");
               setChecked(false);
