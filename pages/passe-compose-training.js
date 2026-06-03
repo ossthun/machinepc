@@ -48,7 +48,7 @@ const regularErVerbs = [
   "ressembler", "rester", "retourner", "rêver", "sauter", "sauver", "signer", "sonner",
   "souhaiter", "terminer", "tirer", "tomber", "toucher", "tourner", "travailler",
   "traverser", "trébucher", "trembler", "trouver", "utiliser", "visiter", "voler",
-  "voyager",
+  "voyager", "boulverser", "basculer", "ricaner", "rouspéter", "râler",
 ];
 
 const regularIrVerbs = [
