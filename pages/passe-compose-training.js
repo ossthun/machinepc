@@ -15,23 +15,39 @@ const pronouns = [
 ];
 
 const etreVerbs = new Set([
-  "aller",
-  "venir",
-  "arriver",
-  "partir",
-  "entrer",
-  "sortir",
-  "monter",
-  "descendre",
-  "naître",
-  "mourir",
-  "rester",
-  "tomber",
-  "retourner",
-  "passer",
-  "devenir",
-  "revenir",
-  "rentrer",
+  "aller", "venir", "arriver", "partir", "entrer", "sortir", "monter",
+  "descendre", "naître", "mourir", "rester", "tomber", "retourner",
+  "passer", "devenir", "revenir", "rentrer",
+]);
+
+const knownVerbs = new Set([
+  // -er
+  "aimer", "adorer", "acheter", "aider", "ajouter", "amener", "appeler",
+  "apporter", "arrêter", "arriver", "avancer", "chercher", "commencer",
+  "compter", "continuer", "couper", "danser", "demander", "donner",
+  "écouter", "entrer", "étudier", "fermer", "gagner", "garder", "habiter",
+  "jouer", "laisser", "laver", "manger", "marcher", "monter", "montrer",
+  "oublier", "parler", "passer", "penser", "porter", "préparer", "raconter",
+  "regarder", "rentrer", "rester", "retourner", "sauter", "tomber",
+  "travailler", "trouver", "visiter", "voyager", "se promener", "se laver",
+  "se lever", "se coucher", "se dépêcher", "se reposer", "se tromper",
+  "se rappeler", "rappeler",
+
+  // -ir
+  "agir", "applaudir", "choisir", "finir", "grandir", "grossir", "maigrir",
+  "obéir", "punir", "réfléchir", "remplir", "réussir", "rougir", "vieillir",
+  "venir", "devenir", "revenir", "partir", "sortir", "dormir", "servir",
+  "sentir", "mentir", "courir", "mourir", "ouvrir", "offrir", "souffrir",
+
+  // -re
+  "attendre", "comprendre", "apprendre", "prendre", "vendre", "répondre",
+  "descendre", "entendre", "perdre", "rendre", "rire", "dire", "écrire",
+  "lire", "mettre", "permettre", "promettre", "vivre", "boire", "croire",
+  "faire", "être", "naître",
+
+  // -oir
+  "avoir", "voir", "savoir", "pouvoir", "vouloir", "devoir", "recevoir",
+  "apercevoir", "falloir", "pleuvoir", "asseoir",
 ]);
 
 const irregularParticiples = {
@@ -50,18 +66,26 @@ const irregularParticiples = {
   apprendre: "appris",
   comprendre: "compris",
   mettre: "mis",
+  permettre: "permis",
+  promettre: "promis",
   ouvrir: "ouvert",
   offrir: "offert",
+  souffrir: "souffert",
   mourir: "mort",
   naître: "né",
   venir: "venu",
   devenir: "devenu",
   revenir: "revenu",
   recevoir: "reçu",
+  apercevoir: "aperçu",
   boire: "bu",
   croire: "cru",
   vivre: "vécu",
   courir: "couru",
+  rire: "ri",
+  falloir: "fallu",
+  pleuvoir: "plu",
+  asseoir: "assis",
 };
 
 function normalize(text) {
@@ -73,7 +97,7 @@ function normalize(text) {
 }
 
 function normalizeVerb(v) {
-  return v.trim().toLowerCase().replace(/\s+/g, " ");
+  return v.trim().toLowerCase().replace(/’/g, "'").replace(/\s+/g, " ");
 }
 
 function beginsWithVowelOrH(word) {
@@ -81,31 +105,25 @@ function beginsWithVowelOrH(word) {
 }
 
 function isPronominalVerb(verb) {
-  return verb.startsWith("se ") || verb.startsWith("s’") || verb.startsWith("s'");
+  return verb.startsWith("se ") || verb.startsWith("s'");
 }
 
 function removeReflexivePart(verb) {
   if (verb.startsWith("se ")) return verb.slice(3);
-  if (verb.startsWith("s’")) return verb.slice(2);
   if (verb.startsWith("s'")) return verb.slice(2);
   return verb;
 }
 
 function getReflexivePronoun(pronoun, nextWord) {
   const reflexive = pronoun.reflexive;
-
   if (["me", "te", "se"].includes(reflexive) && beginsWithVowelOrH(nextWord)) {
     return reflexive[0] + "’";
   }
-
   return reflexive;
 }
 
 function joinReflexiveAndAuxiliary(reflexivePronoun, auxiliaryForm) {
-  if (reflexivePronoun.endsWith("’")) {
-    return `${reflexivePronoun}${auxiliaryForm}`;
-  }
-
+  if (reflexivePronoun.endsWith("’")) return `${reflexivePronoun}${auxiliaryForm}`;
   return `${reflexivePronoun} ${auxiliaryForm}`;
 }
 
@@ -119,7 +137,6 @@ function getPastParticiple(verb) {
 
 function agree(participle, pronoun, auxiliary) {
   if (auxiliary !== "être" || participle === "?") return participle;
-
   let result = participle;
   if (pronoun.gender === "f") result += "e";
   if (pronoun.plural) result += "s";
@@ -127,9 +144,7 @@ function agree(participle, pronoun, auxiliary) {
 }
 
 function elide(subject, auxiliary) {
-  if (subject === "je" && beginsWithVowelOrH(auxiliary)) {
-    return `j’${auxiliary}`;
-  }
+  if (subject === "je" && beginsWithVowelOrH(auxiliary)) return `j’${auxiliary}`;
   return `${subject} ${auxiliary}`;
 }
 
@@ -138,9 +153,7 @@ function cleanSubject(label) {
 }
 
 function displaySubject(subject, auxiliaryForm) {
-  if (subject === "je" && beginsWithVowelOrH(auxiliaryForm)) {
-    return "j’";
-  }
+  if (subject === "je" && beginsWithVowelOrH(auxiliaryForm)) return "j’";
   return subject;
 }
 
@@ -155,10 +168,27 @@ export default function PasseComposeTraining() {
   const result = useMemo(() => {
     const verb = normalizeVerb(verbInput);
     const pronoun = pronouns.find((p) => p.key === pronounKey);
-
     const subject = cleanSubject(pronoun.label);
     const isPronominal = isPronominalVerb(verb);
     const baseVerb = removeReflexivePart(verb);
+    const isKnown = knownVerbs.has(verb) || knownVerbs.has(baseVerb);
+
+    if (!isKnown) {
+      return {
+        verb,
+        baseVerb,
+        pronoun,
+        isKnown: false,
+        sentence: "Verbe inconnu",
+        visibleSubject: subject,
+        subject,
+        isPronominal,
+        expectedAuxInput: "",
+        finalParticiple: "",
+        auxiliary: "",
+        reflexivePronoun: "",
+      };
+    }
 
     const auxiliary = isPronominal || etreVerbs.has(baseVerb) ? "être" : "avoir";
     const auxiliaryForm = auxiliary === "être" ? pronoun.etre : pronoun.avoir;
@@ -182,29 +212,29 @@ export default function PasseComposeTraining() {
       ? `${subject} ${expectedAuxInput}`
       : elide(subject, auxiliaryForm);
 
-    const sentence =
-      rawParticiple === "?" ? "Verbe inconnu" : `${firstPart} ${finalParticiple}`;
-
     return {
       verb,
       baseVerb,
       pronoun,
+      isKnown: true,
       auxiliary,
       auxiliaryForm,
       reflexivePronoun,
       expectedAuxInput,
       rawParticiple,
       finalParticiple,
-      sentence,
+      sentence: `${firstPart} ${finalParticiple}`,
       subject,
       visibleSubject,
       isPronominal,
     };
   }, [verbInput, pronounKey]);
 
-  const auxCorrect = normalize(auxInput) === normalize(result.expectedAuxInput);
+  const auxCorrect =
+    result.isKnown && normalize(auxInput) === normalize(result.expectedAuxInput);
+
   const participleCorrect =
-    normalize(participleInput) === normalize(result.finalParticiple);
+    result.isKnown && normalize(participleInput) === normalize(result.finalParticiple);
 
   function resetExercise(newVerb = verbInput) {
     setVerbInput(newVerb);
@@ -215,6 +245,10 @@ export default function PasseComposeTraining() {
   }
 
   function verifyAll() {
+    if (!result.isKnown) {
+      setChecked(true);
+      return;
+    }
     if (!auxInput.trim() || !participleInput.trim()) return;
     setChecked(true);
   }
@@ -259,12 +293,28 @@ export default function PasseComposeTraining() {
           <input
             value={verbInput}
             onChange={(e) => resetExercise(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                document.getElementById("auxInput")?.focus();
+              }
+            }}
             placeholder="manger, aller, se promener..."
           />
         </label>
       </section>
 
-      <section className="taskCard">
+      {!result.isKnown && (
+        <section className="errorCard">
+          <strong>Verbe inconnu ou mal orthographié.</strong>
+          <br />
+          Le verbe <strong>{result.verb || "…"}</strong> n’est pas dans la liste.
+          Vérifie l’orthographe, par exemple <strong>rappeler</strong> et non{" "}
+          <strong>rappeller</strong>.
+        </section>
+      )}
+
+      <section className={`taskCard ${!result.isKnown ? "disabledCard" : ""}`}>
         <div className="sentenceBuild">
           <span className="subject">{result.visibleSubject}</span>
 
@@ -302,7 +352,9 @@ export default function PasseComposeTraining() {
             </p>
 
             <input
+              id="auxInput"
               value={auxInput}
+              disabled={!result.isKnown}
               onChange={(e) => {
                 setAuxInput(e.target.value);
                 setChecked(false);
@@ -316,7 +368,7 @@ export default function PasseComposeTraining() {
               placeholder={result.isPronominal ? "ex: s’est" : "auxiliaire"}
             />
 
-            {checked && auxCorrect && (
+            {checked && result.isKnown && auxCorrect && (
               <div className="feedback goodText">
                 Correct!{" "}
                 {result.isPronominal ? (
@@ -333,7 +385,7 @@ export default function PasseComposeTraining() {
               </div>
             )}
 
-            {checked && !auxCorrect && (
+            {checked && result.isKnown && !auxCorrect && (
               <div className="feedback badText">
                 Pas encore. Avec <strong>{result.visibleSubject}</strong>, il faut écrire{" "}
                 <strong>{result.expectedAuxInput}</strong>.
@@ -341,11 +393,7 @@ export default function PasseComposeTraining() {
             )}
           </div>
 
-          <div
-            className={`station ${
-              checked ? (participleCorrect ? "good" : "bad") : ""
-            }`}
-          >
+          <div className={`station ${checked ? (participleCorrect ? "good" : "bad") : ""}`}>
             <div className="stationNumber">2</div>
 
             <h2>Machine participe passé</h2>
@@ -364,6 +412,7 @@ export default function PasseComposeTraining() {
             <input
               id="participleInput"
               value={participleInput}
+              disabled={!result.isKnown}
               onChange={(e) => {
                 setParticipleInput(e.target.value);
                 setChecked(false);
@@ -377,14 +426,14 @@ export default function PasseComposeTraining() {
               placeholder="participe passé"
             />
 
-            {checked && participleCorrect && (
+            {checked && result.isKnown && participleCorrect && (
               <div className="feedback goodText">
                 Correct! Le participe passé final est{" "}
                 <strong>{result.finalParticiple}</strong>.
               </div>
             )}
 
-            {checked && !participleCorrect && (
+            {checked && result.isKnown && !participleCorrect && (
               <div className="feedback badText">
                 Pas encore. Le participe passé attendu est{" "}
                 <strong>{result.finalParticiple}</strong>.
@@ -394,11 +443,15 @@ export default function PasseComposeTraining() {
         </div>
 
         <div className="hintBox">
-          <button className="hintButton" onClick={() => setShowHint(!showHint)}>
+          <button
+            className="hintButton"
+            disabled={!result.isKnown}
+            onClick={() => setShowHint(!showHint)}
+          >
             💡 {showHint ? "Cacher l’aide" : "Afficher une aide"}
           </button>
 
-          {showHint && (
+          {showHint && result.isKnown && (
             <div className="hint">
               {result.isPronominal ? (
                 <>
@@ -509,6 +562,13 @@ export default function PasseComposeTraining() {
           text-decoration: none;
         }
 
+        .setup,
+        .errorCard,
+        .taskCard {
+          box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+          backdrop-filter: blur(10px);
+        }
+
         .setup {
           max-width: 720px;
           margin: 0 auto 28px;
@@ -521,8 +581,19 @@ export default function PasseComposeTraining() {
           justify-content: center;
           align-items: flex-end;
           gap: 16px;
-          box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
-          backdrop-filter: blur(10px);
+        }
+
+        .errorCard {
+          max-width: 720px;
+          margin: 0 auto 22px;
+          padding: 18px 22px;
+          border-radius: 22px;
+          background: #fee2e2;
+          border: 3px solid #ef4444;
+          color: #991b1b;
+          text-align: center;
+          line-height: 1.5;
+          font-weight: 800;
         }
 
         label {
@@ -555,6 +626,12 @@ export default function PasseComposeTraining() {
           background: white;
         }
 
+        input:disabled,
+        button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
         button {
           min-width: 190px;
           padding: 0 22px;
@@ -573,7 +650,10 @@ export default function PasseComposeTraining() {
           border: 2px solid white;
           border-radius: 34px;
           padding: 24px;
-          box-shadow: 0 22px 50px rgba(15, 23, 42, 0.14);
+        }
+
+        .disabledCard {
+          opacity: 0.72;
         }
 
         .sentenceBuild {
