@@ -85,21 +85,38 @@ const irregularParticiples = {
 };
 
 const erVerbs = new Set([
-  "accepter", "accompagner", "acheter", "adorer", "aider", "aimer", "ajouter",
-  "allumer", "amener", "apporter", "appeler", "apprécier", "arrêter",
-  "attraper", "avancer", "bavarder", "briller", "cacher", "casser", "changer",
-  "chanter", "chercher", "commencer", "compter", "continuer", "copier",
-  "corriger", "couper", "crier", "danser", "demander", "dépenser", "dessiner",
-  "détester", "donner", "écouter", "embrasser", "emmener", "emporter",
-  "enlever", "entrer", "envoyer", "essayer", "étudier", "expliquer",
-  "fermer", "gagner", "garder", "goûter", "habiter", "imaginer", "inviter",
-  "jeter", "jouer", "laisser", "laver", "lever", "manger", "manquer",
-  "marcher", "monter", "montrer", "nager", "oublier", "parler", "partager",
-  "passer", "penser", "pleurer", "porter", "poser", "préférer", "préparer",
-  "présenter", "prêter", "quitter", "raconter", "ramasser", "ranger",
-  "regarder", "remarquer", "rencontrer", "rentrer", "rester", "retourner",
-  "rêver", "sauter", "téléphoner", "tomber", "toucher", "tourner",
-  "travailler", "trouver", "utiliser", "visiter", "voyager",
+  "abandonner", "accepter", "accompagner", "acheter", "adorer", "adresser",
+  "aider", "aimer", "ajouter", "allumer", "amener", "amuser",
+  "annoncer", "apporter", "apprécier", "approcher", "appeler",
+  "apprendre", "arranger", "arrêter", "arriver", "assurer",
+  "attaquer", "attacher", "attraper", "augmenter", "avancer",
+  "baisser", "balancer", "balayer", "baigner", "bavarder",
+  "blesser", "bouger", "bricoler", "briller", "brosser",
+  "cacher", "calculer", "calmer", "casser", "causer",
+  "changer", "chanter", "charger", "chercher", "choquer",
+  "commander", "commencer", "comparer", "compter", "continuer",
+  "contrôler", "copier", "corriger", "couper", "coucher",
+  "crier", "danser", "décider", "déclarer", "décorer",
+  "demander", "dépenser", "détester", "dessiner", "donner",
+  "douter", "écouter", "embrasser", "emmener", "emporter",
+  "encourager", "enlever", "entrer", "envoyer", "espérer",
+  "essayer", "estimer", "étudier", "éviter", "expliquer",
+  "exprimer", "fermer", "fêter", "filmer", "forcer",
+  "former", "frapper", "gagner", "garder", "garer",
+  "glisser", "grimper", "habiter", "imaginer", "inviter",
+  "jeter", "jouer", "laisser", "laver", "lever",
+  "marcher", "manger", "manquer", "mélanger", "monter",
+  "montrer", "nager", "nettoyer", "noter", "observer",
+  "occuper", "oublier", "parler", "partager", "passer",
+  "penser", "perdre", "photographier", "pleurer", "porter",
+  "poser", "préférer", "préparer", "présenter", "prêter",
+  "promener", "proposer", "protéger", "quitter", "raconter",
+  "ramasser", "ranger", "regarder", "remercier", "rencontrer",
+  "rentrer", "réparer", "reposer", "rester", "retirer",
+  "retourner", "retrouver", "rêver", "saluer", "sauter",
+  "sauver", "signer", "sonner", "terminer", "tomber",
+  "tourner", "travailler", "traverser", "trouver", "utiliser",
+  "visiter", "voyager",
 ]);
 
 const irVerbs = new Set([
@@ -111,6 +128,21 @@ const irVerbs = new Set([
 const reVerbs = new Set([
   "attendre", "confondre", "défendre", "descendre", "entendre", "fondre",
   "perdre", "prétendre", "répondre", "rendre", "vendre",
+]);
+
+const oirVerbs = new Set([
+  "avoir",
+  "devoir",
+  "pleuvoir",
+  "pouvoir",
+  "recevoir",
+  "revoir",
+  "savoir",
+  "voir",
+  "vouloir",
+  "falloir",
+  "valoir",
+  "asseoir",
 ]);
 
 const pronominalBaseVerbs = new Set([
@@ -128,8 +160,9 @@ const knownVerbs = new Set([
   ...erVerbs,
   ...irVerbs,
   ...reVerbs,
+  ...oirVerbs,
   ...pronominalBaseVerbs,
-  ...Object.keys(irregularParticiples).map((v) => v.replace(/^s'/, "")),
+  ...Object.keys(irregularParticiples),
 ]);
 
 function normalizeVerb(v) {
