@@ -325,6 +325,7 @@ export default function PasseComposeTraining() {
 
   const participleCorrect =
     result.isKnown && normalize(participleInput) === normalize(result.finalParticiple);
+  const machineUnlocked = verbSubmitted && result.isKnown;
 
   function resetExercise(newVerb = verbInput) {
     setVerbInput(newVerb);
@@ -389,6 +390,7 @@ export default function PasseComposeTraining() {
               if (e.key === "Enter") {
               e.preventDefault();
               setVerbSubmitted(true);
+              setChecked(false);
 
               if (result.isKnown) {
                 document.getElementById("auxInput")?.focus();
@@ -451,7 +453,7 @@ export default function PasseComposeTraining() {
             <input
               id="auxInput"
               value={auxInput}
-              disabled={verbSubmitted && !result.isKnown}
+              disabled={!machineUnlocked}
               onChange={(e) => {
                 setAuxInput(e.target.value);
                 setChecked(false);
@@ -513,7 +515,7 @@ export default function PasseComposeTraining() {
             <input
               id="participleInput"
               value={participleInput}
-              disabled={verbSubmitted && !result.isKnown}
+              disabled={!machineUnlocked}
               onChange={(e) => {
                 setParticipleInput(e.target.value);
                 setChecked(false);
@@ -546,7 +548,7 @@ export default function PasseComposeTraining() {
         <div className="hintBox">
           <button
             className="hintButton"
-            disabled={verbSubmitted && !result.isKnown}
+            disabled={!machineUnlocked}
             onClick={() => setShowHint(!showHint)}
           >
             💡 {showHint ? "Cacher l’aide" : "Afficher une aide"}
