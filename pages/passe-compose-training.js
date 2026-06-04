@@ -582,15 +582,21 @@ export default function PasseComposeTraining() {
         </div>
 
         <div className="hintBox">
+           <button
+            className="verifyButton"
+            onClick={() => verifyAll()}
+          >
+            ✅ Vérifier
+          </button>
+
           <button
             className="hintButton"
-            disabled={!machineUnlocked}
             onClick={() => setShowHint(!showHint)}
           >
             💡 {showHint ? "Cacher l’aide" : "Afficher une aide"}
           </button>
 
-          {showHint && machineUnlocked && (
+          {showHint && result.isKnown && (
             <div className="hint">
               {result.isPronominal ? (
                 <>
@@ -912,9 +918,16 @@ export default function PasseComposeTraining() {
 
         .hintBox {
           margin-top: 22px;
-          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
         }
-
+        
+        .verifyButton {
+          background: linear-gradient(135deg, #16a34a, #22c55e);
+        }
         .hintButton {
           background: linear-gradient(135deg, #f59e0b, #f97316);
         }
