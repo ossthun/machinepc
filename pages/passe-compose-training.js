@@ -389,7 +389,7 @@ export default function PasseComposeTraining() {
           <select
             value={pronounKey}
             onChange={(e) => {
-              setVerbInput(e.target.value);
+              setPronounKey(e.target.value);
               setVerbStatus("editing");
               setAuxInput("");
               setParticipleInput("");
