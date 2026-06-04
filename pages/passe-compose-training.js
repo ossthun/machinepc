@@ -323,12 +323,13 @@ export default function PasseComposeTraining() {
 
   const showVerbError =
     verbStatus === "invalid" && result.verb.trim().length > 0;
+
   const auxCorrect =
-    machineUnlocked && normalize(auxInput) === normalize(result.expectedAuxInput);
-
+    result.isKnown &&
+    normalize(auxInput) === normalize(result.expectedAuxInput);
   const participleCorrect =
-    machineUnlocked && normalize(participleInput) === normalize(result.finalParticiple);
-
+    result.isKnown &&
+    normalize(participleInput) === normalize(result.finalParticiple);
   function resetExercise(newVerb = verbInput) {
     setVerbInput(newVerb);
     setAuxInput("");
@@ -415,11 +416,13 @@ export default function PasseComposeTraining() {
               setParticipleInput("");
               setChecked(false);
               setShowHint(false);
+            onBlur={submitVerb}
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 submitVerb();
+                document.getElementById("auxInput")?.focus();
               }
             }}
             placeholder="manger, aller, se promener..."
@@ -478,7 +481,6 @@ export default function PasseComposeTraining() {
             <input
               id="auxInput"
               value={auxInput}
-              disabled={!machineUnlocked}
               onChange={(e) => {
                 setAuxInput(e.target.value);
                 setChecked(false);
@@ -539,7 +541,6 @@ export default function PasseComposeTraining() {
             <input
               id="participleInput"
               value={participleInput}
-              disabled={!machineUnlocked}
               onChange={(e) => {
                 setParticipleInput(e.target.value);
                 setChecked(false);
