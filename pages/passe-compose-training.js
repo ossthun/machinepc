@@ -337,8 +337,7 @@ export default function PasseComposeTraining() {
     setChecked(false);
     setShowHint(false);
   }
-    
-  function submitVerb() {
+  function validateVerbOnly() {
     const submitted = normalizeVerb(verbInput);
     const known = isVerbKnown(submitted);
 
@@ -348,8 +347,12 @@ export default function PasseComposeTraining() {
     setChecked(false);
     setShowHint(false);
 
-  return known;
-}
+    return known;
+  }  
+  function submitVerb() {
+    return validateVerbOnly();
+  }
+  
   function verifyAll() {
     const submitted = normalizeVerb(verbInput);
     const known = isVerbKnown(submitted);
@@ -416,13 +419,20 @@ export default function PasseComposeTraining() {
               setParticipleInput("");
               setChecked(false);
               setShowHint(false);
-            onBlur={submitVerb}
+            onBlur={() => {
+              validateVerbOnly();
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                submitVerb();
-                document.getElementById("auxInput")?.focus();
+                validateVerbOnly();
+                setTimeout(() => {
+                  document.getElementById("auxInput")?.focus();
+                }, 0);
+              }
+
+              if (e.key === "Tab") {
+                validateVerbOnly();
               }
             }}
             placeholder="manger, aller, se promener..."
