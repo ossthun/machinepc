@@ -463,7 +463,10 @@ export default function PasseComposeTraining() {
     setShowHint(false);
   }
   function loadRandomVerb() {
-    const verbs = Array.from(knownVerbs);
+    const verbs = [
+    ...Array.from(knownVerbs),
+    ...Array.from(knownPronominalVerbs),
+    ];
     const randomVerb = verbs[Math.floor(Math.random() * verbs.length)];
 
     setVerbInput(randomVerb);
