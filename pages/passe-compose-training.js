@@ -419,6 +419,7 @@ export default function PasseComposeTraining() {
               setParticipleInput("");
               setChecked(false);
               setShowHint(false);
+            }}
             onBlur={() => {
               validateVerbOnly();
             }}
