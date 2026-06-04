@@ -337,7 +337,7 @@ export default function PasseComposeTraining() {
     setChecked(false);
     setShowHint(false);
   }
-
+    
   function submitVerb() {
     const submitted = normalizeVerb(verbInput);
     const known = isVerbKnown(submitted);
@@ -347,26 +347,26 @@ export default function PasseComposeTraining() {
     setVerbStatus(known ? "valid" : "invalid");
     setChecked(false);
     setShowHint(false);
-    setAuxInput("");
-    setParticipleInput("");
 
-    if (known) {
-      setTimeout(() => {
-        document.getElementById("auxInput")?.focus();
-      }, 0);
-    }
-  }
+  return known;
+}
   function verifyAll() {
-    if (!machineUnlocked) {
-      setSubmittedVerb(result.verb);
+    const submitted = normalizeVerb(verbInput);
+    const known = isVerbKnown(submitted);
+
+    setVerbInput(submitted);
+    setSubmittedVerb(submitted);
+    setVerbStatus(known ? "valid" : "invalid");
+
+    if (!known) {
       setChecked(false);
       return;
     }
 
     if (!auxInput.trim() || !participleInput.trim()) return;
+
     setChecked(true);
   }
-
   return (
     <main className="page">
       <section className="hero">
