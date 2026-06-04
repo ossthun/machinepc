@@ -462,6 +462,18 @@ export default function PasseComposeTraining() {
     setChecked(false);
     setShowHint(false);
   }
+  function loadRandomVerb() {
+    const verbs = Array.from(knownVerbs);
+    const randomVerb = verbs[Math.floor(Math.random() * verbs.length)];
+
+    setVerbInput(randomVerb);
+    setSubmittedVerb(randomVerb);
+    setAuxInput("");
+    setParticipleInput("");
+    setChecked(false);
+    setShowHint(false);
+    setVerbStatus("valid");
+  }
   function validateVerbOnly() {
     const submitted = normalizeVerb(verbInput);
     const known = isVerbKnown(submitted);
@@ -536,33 +548,45 @@ export default function PasseComposeTraining() {
 
         <label>
           <span>Verbe à l’infinitif</span>
-          <input
-            value={verbInput}
-            onChange={(e) => {
-              setVerbInput(e.target.value);
-              setAuxInput("");
-              setParticipleInput("");
-              setChecked(false);
-              setShowHint(false);
-            }}
-            onBlur={() => {
-              validateVerbOnly();
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                validateVerbOnly();
-                setTimeout(() => {
-                  document.getElementById("auxInput")?.focus();
-                }, 0);
-              }
 
-              if (e.key === "Tab") {
+          <div className="verbInputRow">
+            <input
+              value={verbInput}
+              onChange={(e) => {
+                setVerbInput(e.target.value);
+                setAuxInput("");
+                setParticipleInput("");
+                setChecked(false);
+                setShowHint(false);
+                setVerbStatus("editing");
+              }}
+              onBlur={() => {
                 validateVerbOnly();
-              }
-            }}
-            placeholder="manger, aller, se promener..."
-          />
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  validateVerbOnly();
+                  setTimeout(() => {
+                    document.getElementById("auxInput")?.focus();
+                  }, 0);
+                }
+
+                if (e.key === "Tab") {
+                  validateVerbOnly();
+                }
+              }}
+              placeholder="manger, aller, se promener..."
+            />
+
+            <button
+              type="button"
+              className="randomButton"
+              onClick={loadRandomVerb}
+            >
+              🎲 Au hasard
+            </button>
+          </div>
         </label>
       </section>
 
@@ -1053,8 +1077,24 @@ export default function PasseComposeTraining() {
         .verifyButton {
           background: linear-gradient(135deg, #16a34a, #22c55e);
         }
+
         .hintButton {
           background: linear-gradient(135deg, #f59e0b, #f97316);
+        }
+
+        .verbInputRow {
+          display: flex;
+          gap: 10px;
+          align-items: stretch;
+        }
+
+        .verbInputRow input {
+          flex: 1;
+        }
+
+        .randomButton {
+          min-width: 160px;
+          background: linear-gradient(135deg, #0891b2, #2563eb);
         }
 
         .hint {
@@ -1067,6 +1107,16 @@ export default function PasseComposeTraining() {
           padding: 16px 22px;
           line-height: 1.55;
         }
+
+        @media (max-width: 600px) {
+          .verbInputRow {
+            flex-direction: column;
+          }
+
+        .randomButton {
+          width: 100%;
+        }
+      }
 
         .footer {
           max-width: 900px;
