@@ -17,7 +17,7 @@ const pronouns = [
 const etreVerbs = new Set([
   "aller", "arriver", "descendre", "devenir", "entrer", "monter", "mourir",
   "naître", "partir", "passer", "rentrer", "rester", "retourner", "revenir",
-  "sortir", "tomber", "venir",
+  "sortir", "tomber", "venir", "rentrer",
 ]);
 
 const regularErVerbs = [
@@ -143,7 +143,7 @@ const regularIrVerbs = [
   "gauchir", "gémir", "glapir", "glatir", "glorifier", "grandir",
   "gravir", "grossir", "guérir", "haïr", "hennir", "impartir",
   "impressionner", "incurver", "infléchir", "investir", "jaillir", "jaunir",
-  "jouir", "lotir", "maigrir", "maintenir", "meurtrir", "mincir",
+  "jouir", "lotir", "maigrir", "meurtrir", "mincir",
   "moisir", "mollir", "munir", "nantir", "narcotir",
   "nourrir", "obéir", "obscurcir", "ouïr", "pâlir",
   "pâtir", "périr", "pervertir", "pétrir", "planir",
@@ -151,8 +151,8 @@ const regularIrVerbs = [
   "ralentir", "ramollir", "rapetisser", "ravir", "rebondir", "rebâtir",
   "reblanchir", "reconvertir", "recrudescir", "redéfinir", "refleurir",
   "refroidir", "regarnir", "rejaillir", "rejouir", "remplir", "renchérir",
-  "rendurcir", "renfléchir", "renourrir", "rentrer", "repolir", "réagir",
-  "réfléchir", "réjouir", "remunir", "remplir", "rétablir", "retenir",
+  "rendurcir", "renfléchir", "renourrir", "repolir", "réagir",
+  "réfléchir", "réjouir", "remunir", "remplir", "rétablir",
   "rétrécir", "réunir", "réussir", "revenir", "revêtir", "rôtir",
   "rougir", "rugir", "saisir", "salir", "secourir", "sentir",
   "sertir", "sourire", "surgir", "surenchérir", "surir", "tapir",
@@ -160,8 +160,7 @@ const regularIrVerbs = [
   "vomir", "agir", "agrandir", "applaudir", "atterrir", "avertir", "bâtir", "blanchir",
   "choisir", "désobéir", "divertir", "durcir", "établir", "finir", "fleurir",
   "fournir", "franchir", "grandir", "grossir", "guérir", "jaunir", "maigrir",
-  "nourrir", "obéir", "pâlir", "punir", "ralentir", "réagir", "réfléchir",
-  "remplir", "réunir", "réussir", "rougir", "saisir", "salir", "vieillir",
+  "nourrir", "obéir", "pâlir", "punir", "ralentir", "réagir", "vieillir",
 ];
 
 const regularReVerbs = [
@@ -182,11 +181,11 @@ const regularReVerbs = [
 const otherKnownVerbs = [
   "aller", "apercevoir", "apprendre", "asseoir", "avoir", "boire", "comprendre", "conduire",
   "construire", "courir", "couvrir", "craindre", "croire", "cueillir", "décrire", "devenir", "devoir", "découvrir",
-  "dire", "écrire", "être", "éteindre", "faire", "falloir", "joindre", "lire", "mentir", "mettre",
+  "dire", "écrire", "être", "éteindre", "faire", "falloir", "joindre", "lire", "maintenir", "mentir", "mettre",
   "mourir", "naître", "obtenir", "offrir", "ouvrir", "partir", "peindre", "permettre", "plaindre", "plaire",
   "pleuvoir", "pouvoir", "prendre", "promettre", "recevoir", "reprendre", "retenir",
   "revenir", "rire", "savoir", "sentir", "servir", "sortir", "souffrir", "suivre",
-  "surprendre", "taire", "tenir", "vêtir", "vaincre", "venir", "vivre", "voir", "vouloir",
+  "surprendre", "tenir", "taire", "tenir", "vêtir", "vaincre", "venir", "vivre", "voir", "vouloir",
 ];
 
 const pronominalVerbs = [
@@ -263,6 +262,8 @@ const irregularParticiples = {
   plaindre: "plaint",
   vêtir: "vêtu",
   joindre: "joint",
+  maintenir: "maintenu",
+  tenir: "tenu",
 };
 
 function normalize(text) {
