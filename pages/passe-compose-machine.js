@@ -303,7 +303,7 @@ export default function PasseComposeMachine() {
     setTimeout(() => setPhase("participle"), 2340);
     setTimeout(() => setPhase("done"), 3840);
   }
-  
+
   function handleVerbChange(e) {
     setVerbInput(e.target.value);
     resetMachine();
@@ -348,19 +348,29 @@ export default function PasseComposeMachine() {
           </select>
         </label>
 
-        <label>
+        <label className="verbLabel">
           <span>Verbe à l’infinitif</span>
-          <input
-            value={verbInput}
-            onChange={handleVerbChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                startMachine();
-              }
-            }}
-            placeholder="manger, aller, se promener..."
-          />
+          <div className="verbRow">
+            <input
+              value={verbInput}
+              onChange={handleVerbChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  startMachine();
+                }
+              }}
+              placeholder="manger, aller, se promener..."
+            />
+
+            <button
+              type="button"
+              className="startButton"
+              onClick={startMachine}
+            >
+              Démarrer
+            </button>
+          </div>
         </label>
       </section>
 
@@ -534,6 +544,17 @@ export default function PasseComposeMachine() {
           height: 22px;
         }
 
+        .verbLabel {
+          flex: 1.45;
+          min-width: 320px;
+        }
+
+        .verbRow {
+          display: flex;
+          gap: 10px;
+          width: 100%;
+        }
+
         select,
         input {
           height: 56px;
@@ -544,6 +565,25 @@ export default function PasseComposeMachine() {
           padding: 0 16px;
           border: 2px solid #cbd5e1;
           background: white;
+        }
+
+        .startButton {
+          height: 56px;
+          box-sizing: border-box;
+          border: none;
+          border-radius: 16px;
+          padding: 0 22px;
+          background: #2563eb;
+          color: white;
+          font-size: 1rem;
+          font-weight: 950;
+          cursor: pointer;
+          white-space: nowrap;
+          box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .startButton:hover {
+          background: #1d4ed8;
         }
 
         .factory {
@@ -851,6 +891,14 @@ export default function PasseComposeMachine() {
 
           .panel {
             align-items: stretch;
+          }
+
+          .verbRow {
+            flex-direction: column;
+          }
+
+          .startButton {
+            width: 100%;
           }
         }
       `}</style>
