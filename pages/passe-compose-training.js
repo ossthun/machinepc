@@ -528,7 +528,7 @@ export default function PasseComposeTraining() {
       </section>
 
       <section className="setup">
-        <label>
+        <label className="pronounLabel">
           <span>Pronom</span>
           <select
             value={pronounKey}
@@ -549,7 +549,7 @@ export default function PasseComposeTraining() {
           </select>
         </label>
 
-        <label>
+        <label className="verbLabel">
           <span>Verbe à l’infinitif</span>
 
           <div className="verbInputRow">
@@ -913,6 +913,14 @@ export default function PasseComposeTraining() {
           font-weight: 900;
           flex: 1;
           min-width: 220px;
+        }
+
+        .pronounLabel {
+          flex: 1;
+        }
+
+        .verbLabel {
+          flex: 2;
         }
 
         label span {
