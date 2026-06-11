@@ -573,7 +573,7 @@ export default function PasseComposeMachine() {
           border: none;
           border-radius: 16px;
           padding: 0 22px;
-          background: linear-gradient(135deg, #3b82f6, #2563eb);
+          background: linear-gradient(135deg, #60a5fa 0%, #1d4ed8 100%);
           color: white;
           font-size: 1rem;
           font-weight: 950;
