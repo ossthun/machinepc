@@ -580,7 +580,9 @@ export default function PasseComposeMachine() {
           cursor: pointer;
           white-space: nowrap;
           transition: transform 0.15s ease, filter 0.15s ease;
-          box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+          box-shadow: 
+            0 10px 20px rgba(37, 99, 235, 0.28),
+            inset 0 1px 1px rgba(255,255,255,0.25);
         }
 
         .startButton:hover {
