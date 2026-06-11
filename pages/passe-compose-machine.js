@@ -573,19 +573,25 @@ export default function PasseComposeMachine() {
           border: none;
           border-radius: 16px;
           padding: 0 22px;
-          background: #2563eb;
+          background: linear-gradient(135deg, #3b82f6, #2563eb);
           color: white;
           font-size: 1rem;
           font-weight: 950;
           cursor: pointer;
           white-space: nowrap;
+          transition: transform 0.15s ease, filter 0.15s ease;
           box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
         }
 
         .startButton:hover {
-          background: #1d4ed8;
+          filter: brightness(1.05);
+          transform: translateY(-1px);
         }
 
+        .startButton:active {
+          transform: translateY(1px);
+        }
+        
         .factory {
           max-width: 1120px;
           margin: 0 auto;
